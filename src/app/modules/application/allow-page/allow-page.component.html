@@ -1,0 +1,106 @@
+<form [formGroup]="adminInvitationForm">
+<div class="w-full p-5">
+	<div class="mb-3">관리자 리스트</div>
+	<p-table [value]="admin" [responsive]="true">
+		<ng-template pTemplate="header">
+			<tr>
+				<th *ngFor="let column of columns">
+					{{column.header}}
+				</th>
+				<th *ngIf="accessible()">
+					
+				</th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-admin>
+			<tr>
+				<td *ngFor="let column of columns">
+					{{ admin[column.field] }}
+				</td>
+				<td *ngIf="accessible()">
+					<button pButton (click)="runDisallow(admin.uid)" type="button" label="정지" class="p-button-rounded p-button-warning"></button>
+				</td>
+			</tr>
+		</ng-template>
+	</p-table>
+</div>
+<div class="w-full p-5">
+	<div class="mb-3">정지 관리자 리스트</div>
+	<p-table [value]="pending">
+		<ng-template pTemplate="header">
+			<tr>
+				<th *ngFor="let column of columns">
+					{{column.header}}
+				</th>
+				<th *ngIf="accessible()">
+
+				</th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-pending>
+			<tr>
+				<td *ngFor="let column of columns">
+					{{ pending[column.field] }}
+				</td>
+				<td *ngIf="accessible()">
+					<button pButton (click)="runAllow(pending.uid)" type="button" label="정지 해제" class="p-button-rounded p-button-success p-mr-3"></button>
+					<button pButton (click)="runReject(pending.uid)" type="button" label="삭제" class="p-button-rounded p-button-danger"></button>
+				</td>
+			</tr>
+		</ng-template>
+	</p-table>
+</div>
+<div *ngIf="accessible()" class="w-full p-5">
+	<div class="mb-3 grid grid-nogutter justify-content-between align-items-center">
+        어드민 초대하기
+        <button *ngIf="accessible()" icon="pi pi-plus" (click)="dialogDisplay=true" label="초대장 생성" pButton></button>
+    </div>
+	<p-table [value]="invitation" [responsive]="true">
+		<ng-template pTemplate="header">
+			<tr>
+				<th *ngFor="let column of invitationColumn">
+					{{column.header}}
+				</th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-invitation>
+			<tr>
+				<td *ngFor="let column of invitationColumn">
+					<div *ngIf="column.field !== 'accessToken'">{{ invitation[column.field] }}</div>
+                    <i *ngIf="column.field === 'accessToken'" (click)="copy(invitation.accessToken)" [class]="icons.CLIP" style="font-size: 2em; cursor: pointer;"></i>
+				</td>
+			</tr>
+		</ng-template>
+	</p-table>
+</div>
+
+<p-dialog 
+    header="초대장 생성" 
+    [modal]="true"
+    [(visible)]="dialogDisplay"
+    [dismissableMask]="true"
+    appendTo="body"
+    [resizable]="false"
+    [draggable]="false"
+    closable="false"
+>
+    <div class="dialog-body grid grid-nogutter">
+        <div class="col-6">
+            <div class="m-3">
+                <div class="w-full mb-1">초대할 어드민 대화명</div>
+                <input formControlName="targetTalkProfileName" class="w-full" type="text" pInputText/>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="m-3">
+                <div class="w-full mb-1">권한</div>
+                <p-dropdown [options]="accessOption" formControlName="access" appendTo="body"></p-dropdown>
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <button pButton (click)="dialogDisplay=false" type="button" label="취소하기" class="p-button-secondary mr-3"></button>
+        <button pButton (click)="submit()" [disabled]="adminInvitationForm.invalid" type="button" label="생성하기" class="p-button-primary"></button>
+    </p-footer>
+</p-dialog>
+</form>

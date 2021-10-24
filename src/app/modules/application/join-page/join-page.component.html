@@ -1,0 +1,23 @@
+<form class="w-full h-full grid grid-nogutter justify-content-center align-items-center" [formGroup]="joinForm">
+    <div>
+        <p-card>
+            <p-header>
+                <div class="form-header">기존 회원 통합</div>
+            </p-header>
+            <div class="form-body">
+                <span class="p-float-label my-5 pb-2">
+                    <input class="w-full" id="float-input" type="text" formControlName="studentId" [maxlength]="8" (keydown)="handleKeyDown($event)" pInputText> 
+                    <label for="float-input">학번</label>
+                </span>
+                <div class="grid grid-nogutter justify-content-end">
+                    <button (click)="submit()" pButton type="button" [icon]="submitButtonIcon" label="제출" [disabled]="joinForm.invalid || block"></button>
+                </div>
+            </div>
+        </p-card>
+        <p-messages severity="warn">
+            <ng-template pTemplate>
+                <div class="custom-message">기존 회원 정보와의 통합을 위해 학번을 기입해주세요.</div>
+            </ng-template>
+        </p-messages>
+    </div>
+</form>

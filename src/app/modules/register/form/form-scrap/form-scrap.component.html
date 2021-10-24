@@ -1,0 +1,29 @@
+<h2 class="w-full">
+    스크래핑 인증 진행
+</h2>
+<p-card>
+    <p-header>
+        <div class="header type1">
+            한동대 구성원 스크래핑 인증 진행
+        </div>
+    </p-header>
+    <div class="grid grid-nogutter w-full">
+        <div class="col-12 md-6 form-group">
+            <div>HISNET ID</div>
+            <input type="text" [(ngModel)]="hisnetId" [max]="dataLength.L100" pInputText />
+        </div>
+        <div class="col-12 md-6 form-group">
+            <div>HISNET PASSWORD</div>
+            <input type="password" [(ngModel)]="hisnetPassword" [max]="dataLength.L100" (keydown)="enterKeyRunHisnetLogin($event)" pInputText />
+        </div>
+    </div>
+    <p-footer>
+        <div class="grid grid-nogutter w-full justify-content-end pr-2 pb-1">
+            <p-button 
+                [icon]="hisnetCheckButtonIcon" 
+                (click)="runHisnetLogin()" 
+                label="인증하기" [disabled]="!isHisnetLoginReady() || block"
+            ></p-button>
+        </div>
+    </p-footer>
+</p-card>

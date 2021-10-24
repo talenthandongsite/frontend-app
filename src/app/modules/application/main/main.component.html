@@ -1,0 +1,20 @@
+<div class="w-full p-5">
+    <h2>안녕하세요! {{ nickname }}님</h2>
+
+    <h4>왼쪽 상단의 메뉴를 클릭해 둘러보세요.</h4>
+
+    <p *ngIf="hisnetOk==true"> 
+        히즈넷 연결 완료
+    </p>
+    <p *ngIf="hisnetOk==false">
+        히즈넷 연결 실패
+    </p>
+    
+    <p *ngIf="apiOk==true"> 
+        서버 연결 완료
+    </p>
+    <p *ngIf="apiOk==false">
+        서버 연결 실패
+    </p>
+    <span style="white-space: pre-line">{{sys.stdout}}</span>
+</div>

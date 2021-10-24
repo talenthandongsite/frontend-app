@@ -1,0 +1,38 @@
+<h2 class="w-full">
+    달란트 금융학회 약관
+</h2>
+<h3 class="w-full p-text-center p-my-3">&lt;학회 약관&gt;</h3>
+
+<div class="section">
+    <ol class="mb-2 start">
+        <li class="mb-5">금융투자가 아니더라도 어떠한 주제든지 자유롭고 편하게 이야기할 수 있습니다. 다만 타 구성원들이 느끼기에 지나치게 불편하거나 전반적인 분위기에 어긋나는 행동을 반복적으로 하는 경우 운영진의 주관적 판단에 따라 탈퇴조치 될 수 있습니다.</li>
+        <li class="mb-5">닉네임을 불분명하게 작성하는 경우(EX .) 퇴장조치 되며 회원구분을 위해서 닉네임 변경요청을 받는 경우 적절한 닉네임으로 변경해야 합니다.</li>
+        <li class="mb-5">Investment Bank 전문 자료 및 공유되는 정보 또는 카카오톡 내용을 캡처하거나, 외부로 유출하는 경우, 재전송-배포하는 경우 경고없이 즉시 탈퇴조치 됩니다.</li>
+        <li class="mb-5">한동대 재학생인 경우 투자-경제-금융관련 학회 및 학회 구성원은 활동소속을 명확히 밝혀야 합니다.</li>
+        <li class="mb-5">한동대 친구추천 시 이 웹페이지 주소로 안내하여야 하며 카카오톡 채팅방 주소 및 비밀번호를 직접 안내하는 경우 경고조치됩니다.</li>
+        <li class="mb-5">학회의 행사 및 방향에 적극적으로 동참하아여 하며, 만약 장기간 미 활동시 임의 탈퇴조치 될 수 있습니다.</li>
+        <li class="mb-5">학회 약관은 수시로 개정될 수 있으며 별도 통보하지 않습니다.</li>
+    </ol>
+</div>
+
+<p-card>
+    <div class="grid grid-nogutter my-3 px-2 w-full justify-content-between">
+        <div class="confirm-line">본인은 학회 약관에 이에 동의합니다.</div>
+        <div class="grid grid-nogutter align-items-center">
+            <div>
+                <p-checkbox [(ngModel)]="consent" binary="true"></p-checkbox>
+            </div>
+        </div>
+    </div>
+</p-card>
+
+<div class="grid grid-nogutter w-full my-3 justify-content-between">
+    <div class="pb-2">
+        
+    </div>
+    <p-button 
+        (click)="runNextStep()" 
+        label="다음 단계"
+        [disabled]="!consent"
+    ></p-button>
+</div>

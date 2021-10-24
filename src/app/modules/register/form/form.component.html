@@ -1,0 +1,52 @@
+<div class="grid-medium registration-page">
+    <h1 class="w-full">
+        달란트 금융학회 회원가입 신청서
+    </h1>
+</div>
+
+<div class="relative w-full overflow-hidden h-6rem">
+    <div class="absolute" style="transition: 0.5s; width: 400vw; padding-left: 40vw; padding-right: 40vw;" [ngStyle]="{'left': ((currentStepIndex * (-40)) - 10) + 'vw'}">
+        <p-steps [model]="steps" [(activeIndex)]="currentStepIndex" [readonly]="true"></p-steps>
+    </div>
+</div>
+
+<div class="grid-medium select-none px-2" style="word-break: keep-all;">
+
+    <div *ngIf="currentStepIndex == 0" class="w-100">
+        <app-term-register [invitation]="invitation" (nextButtonClick)="nextStep($event)"></app-term-register>
+    </div>
+    <div *ngIf="currentStepIndex == 1" class="w-100">
+        <app-term-private (nextButtonClick)="nextStep($event)"></app-term-private>
+    </div>
+    <div *ngIf="currentStepIndex == 2" class="w-100">
+        <app-term-scrap (nextButtonClick)="nextStep($event)"></app-term-scrap>
+    </div>
+    <div *ngIf="currentStepIndex == 3" class="w-100">
+        <app-term-risk (nextButtonClick)="nextStep($event)"></app-term-risk>
+    </div>
+    <div *ngIf="currentStepIndex == 4" class="w-100">
+        <app-term-general (nextButtonClick)="nextStep($event)"></app-term-general>
+    </div>
+    <div *ngIf="currentStepIndex == 5" class="w-100">
+        <app-form-scrap (nextButtonClick)="handleScrapping($event)"></app-form-scrap>
+    </div>
+    <div *ngIf="currentStepIndex == 6" class="w-100">
+        <app-form-register 
+            [studentId]="studentId" 
+            [name]="name" 
+            [status]="status" 
+            (nextButtonClick)="handleRegister($event)"
+        ></app-form-register>
+    </div>
+    <div *ngIf="currentStepIndex == 7" class="w-100">
+        <app-form-interview 
+            [invitation]="invitation"
+            [studentId]="studentId" 
+            [talkProfileName]="talkProfileName" 
+            (nextButtonClick)="goToComplete($event)"
+        ></app-form-interview>
+    </div>
+</div>
+
+<div class="spacer"></div>
+

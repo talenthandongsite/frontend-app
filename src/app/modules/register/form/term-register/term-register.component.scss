@@ -1,0 +1,64 @@
+.section {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+ul {
+    &.circle {
+        list-style-type: '○  ';
+    }
+
+    &.dash {
+        list-style-type: '-  ';
+    }
+
+    &.point {
+        list-style-type: '※  ';
+    }
+
+    &.none {
+        list-style-type: '';
+        padding-inline-start: 0 !important;
+    }
+}
+
+ul.start, ol.start {
+    padding-inline-start: 20px;
+}
+
+
+.spacer {
+    height: 80px;
+    width: 100%;
+}
+
+.red {
+    color: red;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.confirm-line {
+    max-width: 90%;
+    font-weight: bold;
+}
+
+.table-row {
+    border-bottom: 1px solid black;
+}
+
+.row-label {
+    font-weight: bold;
+    text-align: center;
+    width: 20%;
+    background-color: rgb(188, 217, 255);
+}
+
+.row-content {
+    width: 80%;
+    padding: 1em;
+    background-color: rgb(233, 243, 255);
+}

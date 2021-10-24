@@ -1,0 +1,61 @@
+<div class="top-pannel grid grid-nogutter justify-content-between align-items-center">
+	<div (click)="menuSidebar=true" class="grid grid-nogutter justify-content-center align-items-center cusor-pointer">
+		<i [class]="icon.LIST" style="font-size: 2em"></i>
+	</div>
+	<div>
+		<h2 class="m-0 cusor-pointer" (click)="goToMain()">TALENT 100</h2>
+	</div>
+	<div (click)="userSidebar=true" class="grid grid-nogutter justify-content-center align-items-center cusor-pointer">
+		<i class="pi pi-user" style="font-size: 2em;"></i>
+	</div>
+</div>
+<div class="grid grid-nogutter">
+	<div class="router-pannel">
+		<router-outlet></router-outlet>
+	</div>
+</div>
+
+<div class="w-full h-6rem">
+
+</div>
+
+<div class="grid grid-nogutter footer">
+	<h3>달란트 금융학회</h3>
+</div>
+
+<p-sidebar [(visible)]="menuSidebar" [baseZIndex]="10000">
+	<h1 class="font-normal">MENU</h1>
+	<div class="side-pannel">
+		<div class="side-pannel-item" [ngClass]="{'selected': isMain()}" (click)="goToMain()">
+			메인화면
+		</div>
+		<div class="side-pannel-item" [ngClass]="{'selected': isNasdaqBook()}" (click)="goToNdxBook()">
+			NASDAQ 100 BOOK
+		</div>
+	</div>
+	<h3 *ngIf="isAdmin()" class="font-normal text-gray-500">관리자 메뉴</h3>
+	<div *ngIf="isAdmin()" class="side-pannel">
+		<div class="side-pannel-item" [ngClass]="{'selected': isMember()}" (click)="goToMember()">
+			회원 관리
+		</div>
+		<div class="side-pannel-item" [ngClass]="{'selected': isTicket()}" (click)="goToTicket()">
+			회원 초대
+		</div>
+	</div>
+</p-sidebar>
+
+<p-sidebar [(visible)]="userSidebar" position="right" [baseZIndex]="10000">
+    <h1 style="font-weight:normal">{{ nickname }}</h1>
+	<button pButton type="button" (click)="logout()" label="로그아웃" class="ui-button-secondary"></button>
+	<div class="side-pannel">
+		<!-- <div class="side-pannel-item" [ngClass]="{'selected': isInvitation()}" (click)="goToInvitation()">
+			초대장
+		</div>
+		<div class="side-pannel-item" [ngClass]="{'selected': isUser()}" (click)="goToUsers()">
+			구성원
+		</div>
+		<div class="side-pannel-item" [ngClass]="{'selected': isAllow()}" (click)="goToAllow()">
+			관리자
+		</div> -->
+	</div>
+</p-sidebar>

@@ -1,0 +1,58 @@
+<h2 class="w-full">
+    한동대학교 구성원 인증 동의서
+</h2>
+<h3 class="w-full text-center my-3">&lt;온라인 자동화(스크래핑) 서비스 이용 동의서&gt;</h3>
+
+<div class="section">
+    <span class="w-full">
+        1. 스크래핑 서비스 이용 정의
+    </span>
+    <ul class="mb-2 circle">
+        <li>학회 가입신청을 위해 별도로 재학 및 졸업관련 서류를 발급하여 제출하는 번거로움을 없애고자, 학회 회원가입 신청시 HISNET에 자동으로 접속하여 한동대학교 구성원임을 전자적 방식으로 인증하는 서비스입니다.</li>
+    </ul>
+</div>
+
+<div class="section">
+    <span class="w-full">
+        2. 이용기관별 세부 내용
+    </span>
+    <ul class="mb-2 circle">
+        <li>HISNET</li>
+        <ul class="dash">
+            <li>성명(한글), 한동대학교 학번, 재학여부</li>
+        </ul>
+    </ul>
+</div>
+
+<div class="section">
+    <span class="w-full">
+        3. 유의사항
+    </span>
+    <ul class="mb-2 circle">
+        <li>이용기관의 이용제한, 전산장애 등이 발생할 경우 서비스 제공이 제한될 수 있습니다.</li>
+        <li>스크래핑 서비스 이용 미동의 시에는 학회 가입이 제한됩니다.</li>
+        <li class="red">HISNET ID/PW 는 한동대 구성원임을 전자적으로 인증한 후 서버에 저장되지 않으며 별도 수집하지 않습니다.</li>
+    </ul>
+</div>
+
+<p-card>
+    <div class="grid grid-nogutter my-3 px-2 w-full justify-content-between">
+        <div class="confirm-line">본인은 온라인 자동화(스크래핑) 서비스 이용을 통해 개인정보를 수집하고 이용함에 있어 충분히 내용을 확인하고 이에 동의합니다.</div>
+        <div class="grid grid-nogutter align-items-center">
+            <div>
+                <p-checkbox [(ngModel)]="consent" binary="true"></p-checkbox>
+            </div>
+        </div>
+    </div>
+</p-card>
+
+<div class="grid grid-nogutter w-full my-3 justify-content-between">
+    <div class="pb-2">
+        
+    </div>
+    <p-button 
+        (click)="runNextStep()" 
+        label="다음 단계"
+        [disabled]="!consent"
+    ></p-button>
+</div>

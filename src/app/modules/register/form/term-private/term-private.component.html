@@ -1,0 +1,68 @@
+<h2 class="w-full">
+    개인정보 제공 동의
+</h2>
+<h3 class="w-full text-center mb-3">&lt;개인정보 수집 및 이용 동의서&gt;</h3>
+<span class="section">
+    「개인정보보호법」 및 「정보통신망 이용촉진 및 정보보호 등에 관한 법률」의 규정에 따라 아래와 같이 귀하의 개인 정보를 수집ㆍ이용ㆍ위탁ㆍ제공함에 대해 동의란에 체크 또는 서명하는 것으로 개인정보 수집 및 활용에 동의한 것으로 봅니다. 
+</span>
+
+<div class="section">
+    <span class="w-full">
+        □ 개인정보 수집항목, 수집·이용목적, 보유·이용기간
+    </span>
+    <ul class="mb-2 circle">
+        <li>입회하신 회원은 학회 운영을 위해 제공하는 서비스의 일부 또는 전체에 대하여 거부 할 권리를 가지며 거부요청이 있는 경우 이를 지체없이 반영합니다.</li>
+        <li>회원서비스를 이용하기 위해 회원으로 가입할 때 입회신청서를 통하여 회원정보를 수집하고 있습니다.</li>
+        <li>회원의 인권침해에 우려가 있는 민감한 개인정보는 수집하지 않으며 부득이하게 수집해야 할 경우 회원의 사전 동의를 반드시 구할 것입니다. 그리고 수집한 정보들은 사전에 밝힌 목적 이외에 다른 목적으로는 사용하지 않으며 외부로 유출하지 않습니다.</li>
+    </ul>
+    
+    <ul class="mb-2 point start">
+        <li class="red">개인정보 수집 항목 : 성명(한글), 한동대학교 학번, 이메일, 재학여부</li>
+        <li>개인정보 수집 목적 : 학회 가입에 따른 본인확인, 개인식별, 불량회원 부정이용 방지와 비인가 사용  방지, 가입의사 확인, 고지사항 전달</li>
+    </ul>
+</div>
+
+<div class="section">
+    <span class="w-full">
+        □ 개인정보의 보유 및 이용기간
+    </span>
+    <ul class="mb-2 circle">
+        <li>학회를 이용하는 동안 회원의 개인정보를 계속적으로 보유하며 학회 활동을 위해 이용합니다. 만약 개인정보의 수집목적 또는 제공받은 목적이 달성된 때에는 개인정보를 지체 없이 파기합니다.</li>
+        <li>학회를 귀하가 자발적으로 탈퇴시에는, 개인정보 파기요청을 별도로 한 경우 지체없이 파기하며 별도 연락이 없는 경우 보존합니다.</li>
+    </ul>
+</div>
+
+<div class="section">
+    <span class="w-full">
+        □ 수집한 개인정보의 파기
+    </span>
+    <ul class="mb-2 circle">
+        <li>학회는 귀중한 회원의 개인정보를 안전하게 처리하며, 유출의 방지를 위하여 다음과 같은 방법을 통하여 개인정보를 파기합니다.</li>
+        <ul class="dash">
+            <li>종이에 출력된 개인정보는 분쇄기로 분쇄하거나 소각을 통하여 파기합니다.</li>
+            <li>전자적 파일 형태로 저장된 개인정보는 기록을 재생할 수 없는 기술적 방법을 사용하여 삭제합니다.</li>
+        </ul>
+    </ul>
+</div>
+
+<p-card>
+    <div class="grid grid-nogutter my-3 px-2 w-full justify-content-between">
+        <div class="confirm-line">본인은 상기와 같이 개인정보를 수집하고 이용함에 있어 충분히 내용을 확인하고 이에 동의합니다.</div>
+        <div class="grid grid-nogutter align-item-center">
+            <div>
+                <p-checkbox [(ngModel)]="consent" binary="true"></p-checkbox>
+            </div>
+        </div>
+    </div>
+</p-card>
+
+<div class="grid grid-nogutter w-full my-3 justify-content-between">
+    <div class="pb-2">
+        
+    </div>
+    <p-button 
+        (click)="runNextStep()" 
+        label="다음 단계"
+        [disabled]="!consent"
+    ></p-button>
+</div>

@@ -1,0 +1,94 @@
+<form [formGroup]="invitationForm">
+<div *ngIf="accessible()" class="w-full p-5">
+    <div class="mb-3 grid grid-nogutter justify-content-between align-items-center">
+        유효한 초대장 리스트
+        <button icon="pi pi-plus" (click)="openIssue()" label="새 초대장 발급" pButton></button>
+    </div>
+    <p-table 
+        #invitationTable
+        [value]="invitation" 
+        [responsive]="true"
+        [paginator]="true" 
+        [rows]="10"
+        [showCurrentPageReport]="true" 
+        [globalFilterFields]="['talkProfileName', 'createDatetime', 'invitationId']"    
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th *ngFor="let column of invitationColumns" [pSortableColumn]="column.field">
+                    {{column.header}}
+                    <p-sortIcon [field]="column.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                </th>
+                <th *ngIf="accessible()">
+                    
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-invitation>
+            <tr>
+                <td *ngFor="let column of invitationColumns">
+                    <div *ngIf="column.field !== 'invitation'">{{ invitation[column.field] }}</div>
+                    <i *ngIf="column.field === 'invitation'" (click)="copy(invitation.invitation)" [class]="icons.CLIP" style="font-size: 2em; cursor: pointer;"></i>
+                </td>
+                <td *ngIf="accessible()">
+                    <button pButton (click)="openTransfer(invitation)" type="button" label="이전" class="p-button-rounded p-button-warning p-mr-3"></button>
+                    <button pButton (click)="runDelete(invitation)" type="button" label="삭제" class="p-button-rounded p-button-danger"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div class="w-full p-5">
+    <div class="mb-3">내 초대장 리스트</div>
+    <p-table [value]="myInvitation" [responsive]="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th *ngFor="let column of myInvitationColumns">
+                    {{column.header}}
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-invitation>
+            <tr>
+                <td *ngFor="let column of myInvitationColumns">
+                    <div *ngIf="column.field !== 'invitation'">{{ invitation[column.field] }}</div>
+                    <i *ngIf="column.field === 'invitation'" (click)="copy(invitation.invitation)" [class]="icons.CLIP" style="font-size: 2em; cursor: pointer;"></i>
+                </td>
+                <td>
+                    <button pButton (click)="openTransfer(invitation)" type="button" label="이전" class="p-button-rounded p-button-warning p-mr-3"></button>
+                    <button pButton (click)="runDelete(invitation)" type="button" label="삭제" class="p-button-rounded p-button-danger"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog 
+    [header]="transfer ? '초대장 이전하기': '초대장 발급하기'" 
+    [modal]="true"
+    [(visible)]="dialogDisplay"
+    [dismissableMask]="true"
+    appendTo="body"
+    [resizable]="false"
+    [draggable]="false"
+    closable="false"
+>
+    <div class="dialog-body grid grid-nogutter">
+        <div class="col">
+            <div class="m-3">
+                <div class="w-full mb-1">권한</div>
+                <p-dropdown [options]="adminOption" formControlName="uid" appendTo="body"></p-dropdown>
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <button pButton (click)="dialogDisplay=false" type="button" label="취소하기" class="p-button-secondary p-mr-3"></button>
+        <button pButton (click)="submit()" [disabled]="invitationForm.invalid" type="button" [label]="transfer ? '이전하기' : '생성하기'" class="p-button-primary"></button>
+    </p-footer>
+</p-dialog>
+</form>

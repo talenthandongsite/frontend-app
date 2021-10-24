@@ -1,0 +1,150 @@
+<div class="w-full p-5">
+	<div class="mb-3 grid grid-nogutter justify-content-start align-items-center">
+        인터뷰 영상 리스트
+    </div>
+    <p-table 
+        #interviewTable
+        [value]="interview"
+        [paginator]="true" 
+        [rows]="5" 
+        [showCurrentPageReport]="true" 
+        [globalFilterFields]="['name', 'studentId', 'userName', 'email']"
+        [responsive]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+    >
+        <ng-template pTemplate="caption">
+            <div style="text-align: right">        
+                <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                <input type="text" pInputText size="50" placeholder="이름, 학번, 대화명, 메일 검색" (input)="interviewTable.filterGlobal($event.target.value, 'contains')" style="width: 40%">
+            </div>
+        </ng-template>
+		<ng-template pTemplate="header">
+			<tr>
+                <th 
+                    *ngFor="let column of columns" 
+                    [style]="'width:' + column.colWidth"
+                    [pSortableColumn]="column.field"
+                >
+                    {{column.header}}
+                    <p-sortIcon [field]="column.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+				</th>
+				<th style="width: 20%;">
+					인터뷰 영상 링크
+				</th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-interview>
+			<tr>
+				<td *ngFor="let column of columns">
+                    {{ interview[column.field] }}
+				</td>
+				<td>
+					<i (click)="openUrl(interview.interviewLink)" [class]="icons.OUTER_LINK" style="font-size: 2em; cursor: pointer;"></i>
+				</td>
+			</tr>
+        </ng-template>
+	</p-table>
+</div>
+
+<form [formGroup]="userEditorForm">
+<div class="w-full p-5">
+	<div class="mb-3 grid grid-nogutter justify-content-between align-items-center">
+        구 회원 리스트
+        <button icon="pi pi-plus" label="회원 추가하기" (click)="runAdd()" pButton></button>
+    </div>
+    <p-table 
+        #userTable
+        [value]="users"
+        [paginator]="true" 
+        [rows]="5" 
+        [showCurrentPageReport]="true" 
+        [globalFilterFields]="['name', 'studentId', 'userName', 'email']"
+        [responsive]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+    >
+        <ng-template pTemplate="caption">
+            <div style="text-align: right">        
+                <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                <input type="text" pInputText size="50" placeholder="이름, 학번, 대화명, 메일 검색" (input)="userTable.filterGlobal($event.target.value, 'contains')" style="width: 40%">
+            </div>
+        </ng-template>
+		<ng-template pTemplate="header">
+			<tr>
+                <th 
+                    *ngFor="let column of columns" 
+                    [style]="'width:' + column.colWidth"
+                    [pSortableColumn]="column.field"
+                >
+                    {{column.header}}
+                    <p-sortIcon [field]="column.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+				</th>
+				<th style="width: 20%;">
+					
+				</th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-user>
+			<tr>
+				<td *ngFor="let column of columns">
+                    {{ user[column.field] }}
+				</td>
+				<td>
+					<!-- <button pButton (click)="runClipboard(admin.email)" type="button" label="클립보드 이메일" class="p-button-rounded p-button-secondary p-mr-3"></button> -->
+                    <button pButton (click)="runEdit(user)" type="button" label="수정" class="p-button-rounded p-button-warning p-mr-3"></button>
+                    <button *ngIf="accessible()" pButton (click)="runDelete(user.studentId)" type="button" label="삭제" class="p-button-rounded p-button-danger p-mr-3"></button>
+				</td>
+			</tr>
+        </ng-template>
+	</p-table>
+</div>
+
+<p-dialog 
+    [header]="selectedUser ? '수정하기' : '추가하기'" 
+    [modal]="true"
+    [(visible)]="dialogDisplay"
+    [dismissableMask]="true"
+    appendTo="body"
+    [resizable]="false"
+    [draggable]="false"
+    closable="false"
+>
+    <div class="dialog-body grid grid-nogutter">
+        <div class="col-6">
+            <div class="m-3">
+                <div class="w-full mb-1">이름</div>
+                <input formControlName="name" class="w-full" type="text" pInputText/>
+            </div>
+            <div class="m-3">
+                <div class="w-full mb-1">학번</div>
+                <input formControlName="studentId" class="w-full" type="text" pInputText/>
+            </div>
+            <div class="m-3">
+                <div class="w-full mb-1">학적</div>
+                <input formControlName="status" class="w-full" type="text" pInputText/>
+            </div>
+            <div class="m-3">
+                <div class="w-full mb-1">카카오톡 대화명</div>
+                <input formControlName="userName" class="w-full" type="text" pInputText/>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="m-3">
+                <div class="w-full mb-1">메일</div>
+                <input formControlName="email" class="w-full" type="text" pInputText/>
+            </div>
+            <div class="m-3">
+                <div class="w-full mb-1">순번</div>
+                <input formControlName="order" class="w-full" type="text" pInputText/>
+            </div>
+            <div class="m-3">
+                <div class="w-full mb-1">가입신청일</div>
+                <input formControlName="registrationDateTime" class="w-full" type="text" [disabled]="true" pInputText/>
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <button pButton (click)="dialogDisplay=false" type="button" label="취소하기" class="p-button-secondary mr-3"></button>
+        <button pButton (click)="submit()" [disabled]="userEditorForm.invalid" type="button" label="수정하기" class="p-button-primary"></button>
+    </p-footer>
+</p-dialog>
+</form>

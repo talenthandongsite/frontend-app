@@ -1,0 +1,35 @@
+.form-header {
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+
+    padding: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.form-body {
+    width: 300px;
+    margin: 10px;
+}
+
+.spacer {
+    height: 10px;
+    width: 100%;
+}
+
+input {
+    border-radius: 0;
+
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+
+    &:focus {
+        box-shadow: none !important;
+    }
+
+    &:invalid {
+        
+    }
+}
