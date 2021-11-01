@@ -15,6 +15,7 @@ pipeline {
         HOME = '.' // Avoid npm root owned
         GIT_URL= 'https://github.com/talenthandongsite/frontend-app'
         APP_NAME= 'talent-app-and-loadbalancer'
+        NETWORK='talent-private'
     }
     
     stages {
@@ -96,7 +97,7 @@ pipeline {
                 sh "docker container ls -a -fname=talent-web -q | xargs -r docker container rm"
                 sh "docker images --no-trunc --all --quiet --filter='dangling=true' | xargs --no-run-if-empty docker rmi"
                 sh """
-                docker run -p 80:80 -p 443:443 --network talent-private -d --name ${APP_NAME} ${APP_NAME}
+                docker run -p 80:80 -p 443:443 --network ${NETWORK} -d --name ${APP_NAME} ${APP_NAME}
                 """
 
             }
