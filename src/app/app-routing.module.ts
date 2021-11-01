@@ -5,7 +5,7 @@ import { InvalidComponent } from "./invalid/invalid.component";
 const routes: Routes = [
 	{ path: '', redirectTo: 'app', pathMatch: 'full' },
 	{ path: 'app', loadChildren: () => import(`./modules/application/application.module`).then(module => module.ApplicationModule) },
-	{ path: 'register', loadChildren: () => import(`./modules/register/register.module`).then(module => module.RegisterModule) },
+	// { path: 'register', loadChildren: () => import(`./modules/register/register.module`).then(module => module.RegisterModule) },
 	{ path: 'invalid', component: InvalidComponent },
 	{ path: '**', redirectTo: 'app', pathMatch: 'full' }
 ];

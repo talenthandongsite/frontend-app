@@ -19,16 +19,17 @@ import { TicketComponent } from "./ticket/ticket.component";
 @NgModule({
 	imports: [
 		RouterModule.forChild([
-            { path: ADMIN_ROUTE_TYPE.JOIN_PAGE, component: JoinPageComponent },
-            { path: ADMIN_ROUTE_TYPE.LOGIN, component: LoginPageComponent },
+            // { path: ADMIN_ROUTE_TYPE.JOIN_PAGE, component: JoinPageComponent },
+            // { path: ADMIN_ROUTE_TYPE.LOGIN, component: LoginPageComponent },
             { path: ADMIN_ROUTE_TYPE.ROOT, component: ApplicationComponent, children: [
-                { path: ADMIN_ROUTE_TYPE.MAIN, component: MainComponent, canActivate: [ MemberGuard ] },
-                { path: ADMIN_ROUTE_TYPE.NASDAQ_BOOK, component: NdxBookComponent, canActivate: [ MemberGuard ] },
-                { path: ADMIN_ROUTE_TYPE.MEMBER, component: MemberComponent, canActivate: [ AdminGuard ] },
-                { path: ADMIN_ROUTE_TYPE.TICKET, component: TicketComponent, canActivate: [ AdminGuard ] },
+                // { path: ADMIN_ROUTE_TYPE.MAIN, component: MainComponent, canActivate: [ MemberGuard ] },
+                { path: ADMIN_ROUTE_TYPE.NASDAQ_BOOK, component: NdxBookComponent },
+                // { path: ADMIN_ROUTE_TYPE.MEMBER, component: MemberComponent, canActivate: [ AdminGuard ] },
+                // { path: ADMIN_ROUTE_TYPE.TICKET, component: TicketComponent, canActivate: [ AdminGuard ] },
+                { path: '**', redirectTo: ADMIN_ROUTE_TYPE.NASDAQ_BOOK, pathMatch: 'full' },
             ]},
         ])
 	],
-	exports: [RouterModule]
+	exports: [ RouterModule ]
 })
 export class ApplicationRoutingModule { }
