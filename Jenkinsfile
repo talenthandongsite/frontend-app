@@ -29,7 +29,7 @@ pipeline {
 
                 git url: "${GIT_URL}",
                     branch: "master",
-                    credentialsId: 'ae0b1a58-e10c-4b56-9798-21d9dfb03ad3'
+                    credentialsId: 'git-jenkins'
             }
 
 
