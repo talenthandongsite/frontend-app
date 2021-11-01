@@ -93,11 +93,11 @@ pipeline {
             steps {
                 echo "Deploy ${APP_NAME}"
 
-                sh "docker ps -f name=talent-web -q | xargs --no-run-if-empty docker container stop"
-                sh "docker container ls -a -fname=talent-web -q | xargs -r docker container rm"
+                sh "docker ps -f name=${APP_NAME} -q | xargs --no-run-if-empty docker container stop"
+                sh "docker container ls -a -fname=${APP_NAME} -q | xargs -r docker container rm"
                 sh "docker images --no-trunc --all --quiet --filter='dangling=true' | xargs --no-run-if-empty docker rmi"
                 sh """
-                docker run -p 80:80 -p 443:443 --network ${NETWORK} -d --name ${APP_NAME} ${APP_NAME}
+                    docker run -p 80:80 -p 443:443 --network ${NETWORK} --add-host host.docker.internal:host-gateway -d --name ${APP_NAME} ${APP_NAME}
                 """
 
             }
