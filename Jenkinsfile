@@ -13,8 +13,8 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials('awsSecretAccessKey')
         AWS_DEFAULT_REGION = 'ap-northeast-2'
         HOME = '.' // Avoid npm root owned
-        GIT_URL= 'https://github.com/doooooooong/talent-web'
-        APP_NAME= 'talent-web'
+        GIT_URL= 'https://github.com/talenthandongsite/frontend-app'
+        APP_NAME= 'talent-app-and-loadbalancer'
     }
     
     stages {
