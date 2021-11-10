@@ -112,8 +112,9 @@ export class DataService {
         return this.http.get<any>(REQUEST_URL_TYPE.VERIFY_INVITATION + `?invitation=${invitation}`);
     }
 
-    selectNdxBook(): Observable<SelectNdxBookRes[]> {
-        return this.http.get<SelectNdxBookRes[]>(REQUEST_URL_TYPE.SELECT_NDX_BOOK);
+    selectNdxBook(): Observable<SelectNdxBookRes> {
+        const params = { refined: 'true' };
+        return this.http.get<SelectNdxBookRes>(REQUEST_URL_TYPE.SELECT_NDX_BOOK, { params });
     }
 
     listMember(): Observable<any> {

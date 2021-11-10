@@ -33,9 +33,9 @@
         <p-card header="Nasdaq 100 종목 데이터" >
     
             <p-table 
-                [value]="products" 
+                [value]="dataSnapShot" 
                 selectionMode="multiple"
-                [(selection)]="upsideDataArr"
+                [(selection)]="selectedData"
                 (onRowSelect)="onRowSelect($event)"
                 (onRowUnselect)="onRowUnselect($event)"
                 [scrollable]="true"
@@ -44,34 +44,19 @@
                 dataKey="ticker"
                 responsiveLayout="scroll"
             >
-    
                 <ng-template pTemplate="header">
-                    <!-- <tr style="text-align: center;">
-                        <th></th>
-                        <th colspan=10>기본정보</th>
-                        <th colspan=20>IB 투자은행 목표가 평균</th>
-                        <th colspan=6>EPS 전망치</th>
-                    </tr> -->
                     <tr>
-                        <!-- <th style="width:100px">
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th> -->
-                    
-                        <th *ngFor="let obj of selectedProductBasicInfo" style="width:100px" >{{headerName[obj]}}</th>
-                        <th *ngFor="let obj of selectedProductIbTargetInfo" style="width:100px" >{{headerName[obj]}}</th>
-                        <th *ngFor="let obj of selectedProductEpsInfo" style="width:100px">{{headerName[obj]}}</th>
-                        
+                        <th rowspan="2" *ngFor="let header of basicHeader" style="width:100px" [pSortableColumn]="header.value">{{header.label}}<p-sortIcon [field]="header.value"></p-sortIcon></th>
+                        <th rowspan="1" [colSpan]="ibHeaderCount" [ngStyle]="{'width': '' + 100 * ibHeaderCount + 'px'}" >IB 투자은행 목표가 평균</th>
+                        <th rowspan="1" [colSpan]="epsHeaderCount" [ngStyle]="{'width': '' + 100 * epsHeaderCount + 'px'}" >EPS 전망치</th>
+                    </tr>
+                    <tr>
+                        <th *ngFor="let header of ibAndEpsHeader" style="width:100px" [pSortableColumn]="header.value">{{header.label}}<p-sortIcon [field]="header.value"></p-sortIcon></th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-product let-rowIndex="ticker">
-                    <tr [pSelectableRow]="product" [pSelectableRowIndex]="rowIndex">
-                        <!-- <td style="width:100px">
-                            <p-tableCheckbox [value]="product"></p-tableCheckbox>
-                        </td> -->
-                    
-                        <td *ngFor="let data of objectValues(product.basicInfo)" style="width:100px">{{data}}</td>
-                        <td *ngFor="let data of objectValues(product.ibTargetInfo)" style="width:100px">{{data}}</td>
-                        <td *ngFor="let data of objectValues(product.EPSInfo)" style="width:100px">{{data}}</td>
+                <ng-template pTemplate="body" let-dataSnapShot let-rowIndex="ticker">
+                    <tr [pSelectableRow]="dataSnapShot" [pSelectableRowIndex]="rowIndex">
+                        <td *ngFor="let key of dataKeys" style="width:100px">{{ dataSnapShot[key] }}</td>
                     </tr>
                 </ng-template>
             </p-table>

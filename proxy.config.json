@@ -1,6 +1,6 @@
 {
     "/api/*": {
-        "target": "https://talent-handong.site",
+        "target": "http://talent-handong.site",
         "secure": false,
         "changeOrigin": true
     }

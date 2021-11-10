@@ -1,345 +1,117 @@
 import { Component, OnInit } from '@angular/core';
-//import { DataService } from '@services/data/data.service';
-import { ProductService } from './productservice';
 import { DataService } from '@services/data/data.service';
-import { SelectNdxBookRes } from '@app/interfaces';
+import { SelectNdxBookRes, NdxStockColumn, NdxStockFormat, NdxStock, NDX_DATA_TYPE, NDX_CATEGORY_TYPE } from '@app/interfaces';
 
+const BILLION = 1000000000;
+const MILLION = 1000000;
+const THOUSAND = 1000;
+const CENTI = 100;
+const DISPLAY_DECIMAL = 2;
 
 @Component({
-  selector: 'app-ndx-book',
-  templateUrl: './ndx-book.component.html',
-  styleUrls: ['./ndx-book.component.scss']
+    selector: 'app-ndx-book',
+    templateUrl: './ndx-book.component.html',
+    styleUrls: ['./ndx-book.component.scss']
 })
 export class NdxBookComponent implements OnInit {
 
-    objectKeys = Object.keys;
-    objectValues = Object.values;
-
-    products: SelectNdxBookRes[];
-    list;
-    cards;
-    responsiveOptions;
-
-    /* CHART 1. Nasdaq-100 종목별 레이팅 */
-    ratingChartData: any;
-    ratingChartOptions: any;
-    ratingNumArr = [];
-
-
-   /* CHART 2. Nasdaq-100 EPS 변화 */
-    epsChangeChartData: any;
-    epsChangeChartOptions:any;
-    epsDataArr = [];
-
-    /* CHART 3. 종목 상승여력 */
-    upsideChartData: any;
-    upsideChartOptions:any;
-
-    upsideDataLabels=[];
-    upsideDataArr=[];
-    upsideDataSet=[];
-
     loaded: 'LOADING' | 'SUCCESS' | 'ERROR' = 'LOADING';
+    
+    headers: NdxStockFormat[];
+    headerMap: { [key: string]: NdxStockFormat } = { };
+    data: NdxStock[];
+    dataSnapShot: any[];
 
-    headerName = {
-        ticker: "티커",
-        name: "이름",
-        lastPrice: "종가",
-        marketCap: "시가총액",
-        share: "비중",
-        peNTM: "P/E (NTM)",
-        peLTM: "P/E (LTM)",
-        evSalesNTM: "EV/Sales (NTM)",
-        evSalesLTM: "EV/Sales (LTM)",
-        divYield: "배당 (LTM)",
-        numbers: "건 수",
-        strongBuy: "강력매수",
-        buy: "매수",
-        hold: "보유",
-        sell: "매도",
-        strongSell: "강력매도",
-        priceTarget: "현재",
-        potential: "상승여력",
-        curShare: "비중",
-        w1Wave: "1W변동",
-        w1Before: "1W전",
-        w1Share: "1W비중",
-        m1Before: "1M전",
-        m1Share: "1M비중",
-        m3Before: "3M전",
-        m3Share: "3M비중",
-        m6Before: "6M전",
-        m6Share: "6M비중",
-        y1Before: "1Y전",
-        y1Share: "1Y비중",
-        nextEarnings: "다음실적발표일",
-        epsNTM: "EPS(NTM)",
-        epsLTM: "EPS(LTM)",
-        epsFY1E: "EPS(FY1E)",
-        epsFY2E: "EPS(FY2E)",
-        epsFY3E: "EPS(FY3E)"
+    selectedData: NdxStock[];
+
+    get dataKeys() {
+        if (this.loaded !== 'SUCCESS' || !this.data.length ) {
+            return [ ];
+        }
+        const keys = Object.keys(this.headerMap);
+        keys.sort((a, b) => this.headerMap[a].order - this.headerMap[b].order);
+        return keys;
     }
 
-    get selectedProductBasicInfo() {
-        return this.objectKeys(this.products[0].basicInfo);
+    get basicHeader() {
+        return this.headers.filter(element => element.category === NDX_CATEGORY_TYPE.BASIC_INFO);
     }
 
-    get selectedProductIbTargetInfo() {
-        return this.objectKeys(this.products[0].ibTargetInfo);
+    get ibAndEpsHeader() {
+        return this.headers.filter(element => element.category !== NDX_CATEGORY_TYPE.BASIC_INFO);
     }
 
-    get selectedProductEpsInfo() {
-        return this.objectKeys(this.products[0].EPSInfo);
+    get ibHeaderCount() {
+        return this.headers.filter(element => element.category === NDX_CATEGORY_TYPE.IB_TARGET_INFO).length;
     }
 
-	constructor(private dataService: DataService, private productService: ProductService) { }
+    get epsHeaderCount() {
+        return this.headers.filter(element => element.category === NDX_CATEGORY_TYPE.EPS_INFO).length;
+    }
+
+	constructor(private dataService: DataService) { }
 
 	ngOnInit() {
-        this.dataService.selectNdxBook().toPromise().then((result: any) => {
-            this.products = result.result.map(element => {
-                const { ticker } = element.basicInfo;
-                return { ...element, ticker };
-            });
-            /* Chart1 Data Setup */
-            let ratingObj = result.stat.ratingChart
-            
-            this.ratingNumArr.push(ratingObj.totalStrongSell);
-            this.ratingNumArr.push(ratingObj.totalSell);
-            this.ratingNumArr.push(ratingObj.totalHold);
-            this.ratingNumArr.push(ratingObj.totalBuy);
-            this.ratingNumArr.push(ratingObj.totalStrongBuy);
-
-            this.ratingChartData = {
-                labels: ['강력매도', '매도', '보유', '매수', '강력매수'],
-                datasets: [
-                    {
-                        label: '종목별 레이팅',
-                        barThickness: 16,
-                        backgroundColor: '#42A5F5',
-                        data: this.ratingNumArr
-                    },
-                ]
-            };
-
-            this.ratingChartOptions = {
-                indexAxis: 'y',
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: '#495057'
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        ticks: {
-                            color: '#495057',
-                        },
-                        grid: {
-                            color: '#ebedef'
-                        }
-                    },
-                    y: {
-                        ticks: {
-                            color: '#495057'
-                        },
-                        grid: {
-                            color: '#ebedef'
-                        }
-                    }
-                }
-            };
-
-
-            /* Chart2 Data Setup */
-            let epsObj = result.stat.epsChangeChart
-            
-            this.epsDataArr.push(epsObj.totalNTM);
-            this.epsDataArr.push(epsObj.totalFY1E);
-            this.epsDataArr.push(epsObj.totalFY2E);
-            this.epsDataArr.push(epsObj.totalFY3E);
-        
-            this.epsChangeChartData = {
-                labels: ['EPS-NTM', 'EPS-FY1E', 'EPS-FY2E', 'EPS-FY3E'],
-                datasets: [
-                    {
-                        label: 'EPS 전망치',
-                        barThickness: 16,
-                        backgroundColor: '#42A5F5',
-                        data: this.ratingNumArr
-                    },
-                ]
-            };
-
-
-            this.epsChangeChartOptions = {
-                indexAxis: 'y',
-                
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: '#495057'
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        ticks: {
-                            barThickness: 1,
-                            color: '#495057',
-                            
-                        
-                        },
-                        grid: {
-                            color: '#ebedef',
-                        }
-                    },
-                    y: {
-                        ticks: {
-                            color: '#495057'
-                        },
-                        grid: {
-                            color: '#ebedef'
-                        }
-                    }
-                }
-            };
-            this.loaded = 'SUCCESS';
-        }).catch(error => {
-            console.log(error);
+        this.getNdxBook().then(_ => this.loaded = 'SUCCESS').catch(error => {
             this.loaded = 'ERROR';
+            console.log(error);
         });
     }
 
-    onRowSelect = (event) => {
-        console.log(this.upsideDataArr)
-
-        if (this.upsideDataArr.length > 20) {
-            this.upsideDataArr.shift();
-        }
-
-        this.upsideDataLabels = this.upsideDataArr.map(row => row.basicInfo.ticker);
-        this.upsideDataSet = this.upsideDataArr.map(row => parseFloat(row.ibTargetInfo.potential)*100);
-
-        this.upsideChartData = {
-            labels: this.upsideDataLabels,
-            datasets: [
-                {
-                    label: '상승여력',
-                    backgroundColor: '#42A5F5',
-                    data: this.upsideDataSet
-                },
-            ]
-        }
-
-        this.upsideChartData = {
-            labels: this.upsideDataLabels,
-            datasets: [
-                {
-                    label: '상승여력',
-                    barThickness: 16,
-                    backgroundColor: '#42A5F5',
-                    data: this.upsideDataSet
-                },
-            ]
-        }
-
-
-        this.upsideChartOptions = {
-            indexAxis: 'y',
-            plugins: {
-                legend: {
-                    labels: {
-                        color: '#495057'
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        
-
-                        color: '#495057'
-                    },
-                    grid: {
-                        color: '#ebedef'
-                    }
-                },
-                y: {
-                    ticks: {
-                        min: 0,
-                        max: 100,
-                        color: '#495057'
-                    },
-                    grid: {
-                        color: '#ebedef'
-                    }
-                }
-            }
-        };
+    getNdxBook(): Promise<any> {
+        return this.dataService.selectNdxBook().toPromise().then(({ ndxPrediction, epsPrediction, stockInfo, stockHeader, stockRating }) => {
+            this.headers = stockHeader;
+            // this.headers = NdxStockColumn;
+            this.data = stockInfo;
+            this.headers.sort((a, b) => a.order - b.order);
+            this.headers.forEach(element => {
+                const { value } = element;
+                this.headerMap[value] = element;
+            });
+            this.dataSnapShot = this.data.map(element => {
+                const parsed = {};
+                Object.keys(element).forEach(key => {
+                    parsed[key] = this.customPipe(element, key);
+                });
+                return parsed;
+            });
+        });
     }
 
-    onRowUnselect = (event) => {
-        this.upsideDataLabels = this.upsideDataArr.map(row => row.basicInfo.ticker);
-        this.upsideDataSet = this.upsideDataArr.map(row => parseFloat(row.ibTargetInfo.potential)*100);
+    onRowSelect() {
 
-        this.upsideChartData = {
-            labels: this.upsideDataLabels,
-            datasets: [
-                {
-                    label: '상승여력',
-                    backgroundColor: '#42A5F5',
-                    data: this.upsideDataSet
-                },
-            ]
+    }
+
+    onRowUnselect() {
+
+    }
+
+    customPipe(object: any, key: string) {
+        const value = object[key];
+        const { type } = this.headerMap[key];
+
+        if (!value || value.length == 0) {
+            return '-';
         }
 
-        this.upsideChartData = {
-            labels: this.upsideDataLabels,
-            datasets: [
-                {
-                    label: '상승여력',
-                    barThickness: 16,
-                    backgroundColor: '#42A5F5',
-                    data: this.upsideDataSet
-                },
-            ]
+        if (type == NDX_DATA_TYPE.TIMES) {
+            return `${ value }x`;
+        } else if (type == NDX_DATA_TYPE.PERCENTAGE) {
+            return `${ (value * CENTI).toFixed(DISPLAY_DECIMAL) }%`;
+        } else if (type == NDX_DATA_TYPE.VARIATION) {
+            return `${ value > 0 ? '+' : '' }${ (value * CENTI).toFixed(DISPLAY_DECIMAL) }%`;
+        } else if (type == NDX_DATA_TYPE.DATE) {
+            return (new Date(value)).toDateString();
+        } else if (type == NDX_DATA_TYPE.MARKET_CAP) {
+            if (value >= BILLION) return `$ ${ (value / BILLION).toFixed(DISPLAY_DECIMAL) }B`;
+            if (value >= MILLION) return `$ ${ (value / MILLION).toFixed(DISPLAY_DECIMAL) }M`;
+            if (value >= THOUSAND) return `$ ${ (value / THOUSAND).toFixed(DISPLAY_DECIMAL) }K`;
+        } else if (type == NDX_DATA_TYPE.PRICE) {
+            return `$ ${value.toFixed(DISPLAY_DECIMAL)}`;
+        } else if (type == NDX_DATA_TYPE.NUMBER) {
+            return value;
+        } else {
+            return value;
         }
-
-
-        this.upsideChartOptions = {
-            indexAxis: 'y',
-            plugins: {
-                legend: {
-                    labels: {
-                        color: '#495057'
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    display: true,
-                    ticks: {
-                        color: '#495057'
-                    },
-                    grid: {
-                        color: '#ebedef'
-                    }
-                },
-                y: {
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-                    ticks: {
-                        min: 0,
-                        maxTicksLimit: 100,
-                        color: '#495057'
-                    },
-                    grid: {
-                        color: '#ebedef'
-                    }
-                }
-            }
-        };
     }
 }
