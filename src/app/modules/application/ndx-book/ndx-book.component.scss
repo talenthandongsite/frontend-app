@@ -25,3 +25,13 @@
 .section-table{
     overflow-x: scroll;
 }
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
+.layout-news-active :host ::ng-deep .p-datatable tr > th {
+    top: 0;
+}

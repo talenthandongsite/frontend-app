@@ -1,3 +1,4 @@
+
 export enum NDX_DATA_TYPE {
     STRING = 'STRING', // Apple Inc.
     NUMBER = 'NUMBER', // 12.1
@@ -23,6 +24,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.NUMBER,
         category: NDX_CATEGORY_TYPE.EPS_INFO,
+        display: true,
         order: 34
     },
     {
@@ -31,6 +33,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.NUMBER,
         category: NDX_CATEGORY_TYPE.EPS_INFO,
+        display: true,
         order: 35
     },
     {
@@ -39,6 +42,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.NUMBER,
         category: NDX_CATEGORY_TYPE.EPS_INFO,
+        display: true,
         order: 36
     },
     {
@@ -47,6 +51,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.NUMBER,
         category: NDX_CATEGORY_TYPE.EPS_INFO,
+        display: true,
         order: 33
     },
     {
@@ -55,6 +60,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.NUMBER,
         category: NDX_CATEGORY_TYPE.EPS_INFO,
+        display: true,
         order: 32
     },
     {
@@ -63,6 +69,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.DATE,
         category: NDX_CATEGORY_TYPE.EPS_INFO,
+        display: true,
         order: 31
     },
     {
@@ -71,6 +78,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.PERCENTAGE,
         category: NDX_CATEGORY_TYPE.BASIC_INFO,
+        display: true,
         order: 10
     },
     {
@@ -79,6 +87,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.TIMES,
         category: NDX_CATEGORY_TYPE.BASIC_INFO,
+        display: true,
         order: 9
     },
     {
@@ -87,6 +96,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.TIMES,
         category: NDX_CATEGORY_TYPE.BASIC_INFO,
+        display: true,
         order: 8,
     },
     {
@@ -95,6 +105,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.PRICE,
         category: NDX_CATEGORY_TYPE.BASIC_INFO,
+        display: true,
         order: 3
     },
     {
@@ -103,6 +114,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.MARKET_CAP,
         category: NDX_CATEGORY_TYPE.BASIC_INFO,
+        display: true,
         order: 4
     },
     {
@@ -111,6 +123,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.STRING,
         category: NDX_CATEGORY_TYPE.BASIC_INFO,
+        display: true,
         order: 2
     },
     {
@@ -119,6 +132,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.TIMES,
         category: NDX_CATEGORY_TYPE.BASIC_INFO,
+        display: true,
         order: 7
     },
     {
@@ -127,6 +141,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.TIMES,
         category: NDX_CATEGORY_TYPE.BASIC_INFO,
+        display: true,
         order: 6
     },
     {
@@ -135,6 +150,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.PERCENTAGE,
         category: NDX_CATEGORY_TYPE.BASIC_INFO,
+        display: true,
         order: 5
     },
     {
@@ -143,6 +159,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.STRING,
         category: NDX_CATEGORY_TYPE.BASIC_INFO,
+        display: true,
         order: 1
     },
     {
@@ -151,6 +168,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.NUMBER,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: true,
         order: 13
     },
     {
@@ -159,6 +177,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.PERCENTAGE,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: false,
         order: 19
     },
     {
@@ -167,6 +186,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.NUMBER,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: true,
         order: 14
     },
     {
@@ -175,6 +195,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.PRICE,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: true,
         order: 23
     },
     {
@@ -183,6 +204,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.VARIATION,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: false,
         order: 24
     },
     {
@@ -191,6 +213,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.PRICE,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: true,
         order: 25
     },
     {
@@ -199,6 +222,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.VARIATION,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: false,
         order: 26
     },
     {
@@ -207,6 +231,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.PRICE,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: true,
         order: 27
     },
     {
@@ -215,6 +240,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.VARIATION,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: false,
         order: 28
     },
     {
@@ -223,6 +249,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.NUMBER,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: true,
         order: 11
     },
     {
@@ -231,14 +258,16 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.VARIATION,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: true,
         order: 18
     },
     {
-        label: '현재',
+        label: '현재 목표가',
         value: 'priceTarget',
         description: '',
         type: NDX_DATA_TYPE.PRICE,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: true,
         order: 17
     },
     {
@@ -247,6 +276,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.NUMBER,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: true,
         order: 15
     },
     {
@@ -255,6 +285,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.NUMBER,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: true,
         order: 12
     },
     {
@@ -263,6 +294,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.NUMBER,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: true,
         order: 16
     },
     {
@@ -271,6 +303,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.PRICE,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: true,
         order: 21
     },
     {
@@ -279,6 +312,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.VARIATION,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: false,
         order: 22
     },
     {
@@ -287,6 +321,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.PRICE,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: true,
         order: 20
     },
     {
@@ -295,6 +330,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.PRICE,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: true,
         order: 29
     },
     {
@@ -303,6 +339,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.VARIATION,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
+        display: false,
         order: 30
     },
 ]
@@ -310,6 +347,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
 export interface NdxStock {
     epsFY1E: number;
     epsFY2E: number;
+    epsFY3E: number;
     epsLTM: number;
     epsNTM: number;
     nextEarnings: number;
@@ -352,6 +390,7 @@ export interface NdxStockFormat {
     type: NDX_DATA_TYPE;
     category: NDX_CATEGORY_TYPE;
     order: number;
+    display: boolean;
 }
 
 export interface NdxEPSPrediction {
@@ -375,12 +414,12 @@ export interface NdxPrediction {
 }
 
 export interface NdxBookData {
-    ndxPrediction: NdxPrediction;
-    epsPrediction: NdxEPSPrediction;
-    stockRating: NdxStockRating;
-    stockHeader: NdxStockFormat[];
-    stockInfo: NdxStock[];
+    header: NdxStockFormat[];
+    data: NdxStock[];
+    currentNdx: number;
+    summary: NdxStock;
 }
+
 export interface SelectNdxBookRes extends NdxBookData {
 
 }

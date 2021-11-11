@@ -8,20 +8,32 @@
 
     <div class="flex flex-nowrap w-full overflow-scroll px-3 my-5">
         <div class="w-25rem mr-3 mb-3">
+            <p-card header="Nasdaq 100 목표 가격" >
+                <p-chart type="line" [data]="ndxTargetChartData" [options]="ndxTargetChartOptions"></p-chart>
+            </p-card>
+        </div>
+
+        <div class="w-25rem mr-3 mb-3">
             <p-card header="Nasdaq 100 종목별 레이팅" >
-                <p-chart type="bar" [data]="ratingChartData" [options]="ratingChartOptions"></p-chart>
+                <p-chart type="bar" [data]="ndxRatingChartData" [options]="ndxRatingChartOptions"></p-chart>
             </p-card>
         </div>
     
         <div class="w-25rem mr-3 mb-3">
             <p-card header="Nasdaq 100 EPS 변화">
-                <p-chart type="bar" [data]="epsChangeChartData" [options]="epsChangeChartOptions" bar-></p-chart>
+                <p-chart type="bar" [data]="ndxEpsChangeChartData" [options]="ndxEpsChangeChartOptions" bar-></p-chart>
             </p-card>
         </div>
     
         <div class="w-25rem mr-3 mb-3">
-            <p-card header="Nasdaq 100 종목별 상승여력">
-                <p-chart #chart type="bar" [data]="upsideChartData" [options]="upsideChartOptions"></p-chart>
+            <p-card header="종목별 상승여력">
+                <p-chart #chart type="bar" [data]="potentialChartData" [options]="potentialChartOptions"></p-chart>
+            </p-card>
+        </div>
+
+        <div class="w-25rem mr-3 mb-3">
+            <p-card header="종목별 EPS 변화">
+                <p-chart type="bar" [data]="epsChangeChartData" [options]="epsChangeChartOptions" bar-></p-chart>
             </p-card>
         </div>
     </div>
@@ -46,12 +58,24 @@
             >
                 <ng-template pTemplate="header">
                     <tr>
-                        <th rowspan="2" *ngFor="let header of basicHeader" style="width:100px" [pSortableColumn]="header.value">{{header.label}}<p-sortIcon [field]="header.value"></p-sortIcon></th>
+                        <th 
+                            rowspan="2" 
+                            *ngFor="let header of basicHeader" 
+                            style="width:100px" 
+                            [pSortableColumn]="header.value"
+                        >
+                            {{ header.label }}
+                            <p-sortIcon [field]="header.value"></p-sortIcon>
+                        </th>
                         <th rowspan="1" [colSpan]="ibHeaderCount" [ngStyle]="{'width': '' + 100 * ibHeaderCount + 'px'}" >IB 투자은행 목표가 평균</th>
                         <th rowspan="1" [colSpan]="epsHeaderCount" [ngStyle]="{'width': '' + 100 * epsHeaderCount + 'px'}" >EPS 전망치</th>
                     </tr>
                     <tr>
                         <th *ngFor="let header of ibAndEpsHeader" style="width:100px" [pSortableColumn]="header.value">{{header.label}}<p-sortIcon [field]="header.value"></p-sortIcon></th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="width: 200px">NASDAQ 100</th>
+                        <th *ngFor="let key of summaryHeaderKeys" style="width:100px">{{ dataSummary[key] }}</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-dataSnapShot let-rowIndex="ticker">
