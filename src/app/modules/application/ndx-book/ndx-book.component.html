@@ -8,32 +8,32 @@
 
     <div class="flex flex-nowrap w-full overflow-scroll px-3 my-5">
         <div class="w-25rem mr-3 mb-3">
-            <p-card header="Nasdaq 100 목표 가격" >
-                <p-chart type="line" [data]="ndxTargetChartData" [options]="ndxTargetChartOptions"></p-chart>
+            <p-card header="NASDAQ 100 목표 가격" >
+                <p-chart type="line" [data]="ndxTargetChart" [options]="ndxTargetChartOption"></p-chart>
             </p-card>
         </div>
 
         <div class="w-25rem mr-3 mb-3">
-            <p-card header="Nasdaq 100 종목별 레이팅" >
-                <p-chart type="bar" [data]="ndxRatingChartData" [options]="ndxRatingChartOptions"></p-chart>
+            <p-card header="NASDAQ 100 종목별 레이팅" >
+                <p-chart type="horizontalBar" [data]="ndxRatingChart" [options]="ndxRatingChartOption"></p-chart>
             </p-card>
         </div>
     
         <div class="w-25rem mr-3 mb-3">
-            <p-card header="Nasdaq 100 EPS 변화">
-                <p-chart type="bar" [data]="ndxEpsChangeChartData" [options]="ndxEpsChangeChartOptions" bar-></p-chart>
+            <p-card header="NASDAQ 100 EPS 변화">
+                <p-chart type="bar" [data]="ndxEpsChart" [options]="ndxEpsChartOption" bar-></p-chart>
             </p-card>
         </div>
     
         <div class="w-25rem mr-3 mb-3">
             <p-card header="종목별 상승여력">
-                <p-chart #chart type="bar" [data]="potentialChartData" [options]="potentialChartOptions"></p-chart>
+                <p-chart #chart type="bar" [data]="potentialChart" [options]="potentialChartOption"></p-chart>
             </p-card>
         </div>
 
         <div class="w-25rem mr-3 mb-3">
             <p-card header="종목별 EPS 변화">
-                <p-chart type="bar" [data]="epsChangeChartData" [options]="epsChangeChartOptions" bar-></p-chart>
+                <p-chart type="line" [data]="epsChangeChart" [options]="epsChangeChartOption" bar-></p-chart>
             </p-card>
         </div>
     </div>
@@ -41,19 +41,20 @@
     
     
     
-    <div  class="section-table">
-        <p-card header="Nasdaq 100 종목 데이터" >
+    <div class="section-table">
+        <p-card header="NASDAQ 100 종목 데이터" >
     
             <p-table 
-                [value]="dataSnapShot" 
+                #dataTable
+                [value]="data" 
                 selectionMode="multiple"
                 [(selection)]="selectedData"
+                dataKey="ticker"
                 (onRowSelect)="onRowSelect($event)"
                 (onRowUnselect)="onRowUnselect($event)"
                 [scrollable]="true"
                 styleClass="p-datatable-sm"
                 [resizableColumns]="true"
-                dataKey="ticker"
                 responsiveLayout="scroll"
             >
                 <ng-template pTemplate="header">
@@ -78,9 +79,9 @@
                         <th *ngFor="let key of summaryHeaderKeys" style="width:100px">{{ dataSummary[key] }}</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-dataSnapShot let-rowIndex="ticker">
-                    <tr [pSelectableRow]="dataSnapShot" [pSelectableRowIndex]="rowIndex">
-                        <td *ngFor="let key of dataKeys" style="width:100px">{{ dataSnapShot[key] }}</td>
+                <ng-template pTemplate="body" let-data let-rowIndex="ticker">
+                    <tr [pSelectableRow]="data" [pSelectableRowIndex]="rowIndex">
+                        <td *ngFor="let key of dataKeys" style="width:100px">{{ data[key] | ndxBookData: headerMap[key].type }}</td>
                     </tr>
                 </ng-template>
             </p-table>

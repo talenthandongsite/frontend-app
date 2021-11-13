@@ -1,6 +1,7 @@
 
 export enum NDX_DATA_TYPE {
     STRING = 'STRING', // Apple Inc.
+    INTEGER = 'INTEGER', // 12.1
     NUMBER = 'NUMBER', // 12.1
     MARKET_CAP = 'MARKET_CAP', //ex. $ 12.2B
     PRICE = 'PRICE', // ex. $142.1
@@ -166,7 +167,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         label: '매수',
         value: 'buy',
         description: '',
-        type: NDX_DATA_TYPE.NUMBER,
+        type: NDX_DATA_TYPE.INTEGER,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
         display: true,
         order: 13
@@ -184,7 +185,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         label: '보유',
         value: 'hold',
         description: '',
-        type: NDX_DATA_TYPE.NUMBER,
+        type: NDX_DATA_TYPE.INTEGER,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
         display: true,
         order: 14
@@ -247,7 +248,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         label: '건 수',
         value: 'numbers',
         description: '',
-        type: NDX_DATA_TYPE.NUMBER,
+        type: NDX_DATA_TYPE.INTEGER,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
         display: true,
         order: 11
@@ -274,7 +275,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         label: '매도',
         value: 'sell',
         description: '',
-        type: NDX_DATA_TYPE.NUMBER,
+        type: NDX_DATA_TYPE.INTEGER,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
         display: true,
         order: 15
@@ -283,7 +284,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         label: '강력매수',
         value: 'strongBuy',
         description: '',
-        type: NDX_DATA_TYPE.NUMBER,
+        type: NDX_DATA_TYPE.INTEGER,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
         display: true,
         order: 12
@@ -292,7 +293,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         label: '강력매도',
         value: 'strongSell',
         description: '',
-        type: NDX_DATA_TYPE.NUMBER,
+        type: NDX_DATA_TYPE.INTEGER,
         category: NDX_CATEGORY_TYPE.IB_TARGET_INFO,
         display: true,
         order: 16
@@ -422,4 +423,15 @@ export interface NdxBookData {
 
 export interface SelectNdxBookRes extends NdxBookData {
 
+}
+
+export interface ChartData {
+    labels: string[];
+    datasets: {
+        label?: string;
+        data: number[]
+        fill?: boolean;
+        borderColor?: string;
+        tension?: number;
+    }[];
 }

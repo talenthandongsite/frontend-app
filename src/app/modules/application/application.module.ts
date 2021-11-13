@@ -19,6 +19,7 @@ import { UsersComponent } from './users/users.component';
 import { SystemAdminGuard } from "./access-level/system-admin.guard";
 import { MemberComponent } from "./member/member.component";
 import { TicketComponent } from "./ticket/ticket.component";
+import { NdxBookDataPipe } from "./ndx-book/ndx-book-data.pipe";
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import { TicketComponent } from "./ticket/ticket.component";
         NdxBookComponent,
         MemberComponent,
         TicketComponent,
+        NdxBookDataPipe
     ],
     imports: [
         ApplicationRoutingModule,
@@ -42,7 +44,8 @@ import { TicketComponent } from "./ticket/ticket.component";
         AdminGuard,
         MemberGuard,
         SystemAdminGuard,
-        ProductService
+        ProductService,
+        NdxBookDataPipe
     ]
 })
 export class ApplicationModule {};

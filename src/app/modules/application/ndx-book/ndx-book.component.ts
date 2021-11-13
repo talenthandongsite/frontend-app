@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '@services/data/data.service';
-import { SelectNdxBookRes, NdxStockColumn, NdxStockFormat, NdxStock, NDX_DATA_TYPE, NDX_CATEGORY_TYPE } from '@app/interfaces';
+import { SelectNdxBookRes, NdxStockColumn, NdxStockFormat, NdxStock, NDX_DATA_TYPE, NDX_CATEGORY_TYPE, ChartData } from '@app/interfaces';
+import { NdxBookDataPipe } from './ndx-book-data.pipe';
+import { Table } from 'primeng/table';
+import { EPS_CHART_OPTION, EPS_KEYS, NDX_EPS_CHART_OPTION, NDX_RATING_CHART_OPTION, NDX_TARGET_CHART_OPTION, POTENTIAL_CHART_OPTION, TARGET_PRICE_KEYS } from './ndex-book-chart.constant';
 
-const TRILLION = 1000000000000;
-const BILLION = 1000000000;
-const MILLION = 1000000;
-const THOUSAND = 1000;
-const CENTI = 100;
-const DISPLAY_DECIMAL = 2;
 
 @Component({
     selector: 'app-ndx-book',
@@ -16,57 +13,10 @@ const DISPLAY_DECIMAL = 2;
 })
 export class NdxBookComponent implements OnInit {
 
+    @ViewChild('dataTable') dataTable: Table;
+
     loaded: 'LOADING' | 'SUCCESS' | 'ERROR' = 'LOADING';
-    
 
-    // chart data
-    basicData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [
-            {
-                label: 'First Dataset',
-                data: [65, 59, 80, 81, 56, 55, 40],
-                fill: false,
-                borderColor: '#42A5F5',
-                tension: .4
-            },
-            {
-                label: 'Second Dataset',
-                data: [28, 48, 40, 19, 86, 27, 90],
-                fill: false,
-                borderColor: '#FFA726',
-                tension: .4
-            }
-        ]
-    };
-
-    basicOptions = {
-        plugins: {
-            legend: {
-                labels: {
-                    color: '#495057'
-                }
-            }
-        },
-        scales: {
-            x: {
-                ticks: {
-                    color: '#495057'
-                },
-                grid: {
-                    color: '#ebedef'
-                }
-            },
-            y: {
-                ticks: {
-                    color: '#495057'
-                },
-                grid: {
-                    color: '#ebedef'
-                }
-            }
-        }
-    };
 
     // table data
     headers: NdxStockFormat[];
@@ -74,12 +24,24 @@ export class NdxBookComponent implements OnInit {
     data: NdxStock[];
     dataSnapShot: any[];
 
-    dataSummary: any = {};
+    summary: NdxStock;
+    dataSummary: any = { };
 
     // common data
-    selectedData: NdxStock[];
+    selectedData: NdxStock[] = [ ];
 
+    // chart data
+    ndxTargetChart: ChartData;
+    ndxRatingChart: ChartData;
+    ndxEpsChart: ChartData;
+    potentialChart: ChartData;
+    epsChangeChart: ChartData;
 
+    ndxTargetChartOption = NDX_TARGET_CHART_OPTION;
+    ndxRatingChartOption = NDX_RATING_CHART_OPTION;
+    ndxEpsChartOption = NDX_EPS_CHART_OPTION;
+    potentialChartOption = POTENTIAL_CHART_OPTION;
+    epsChangeChartOption = EPS_CHART_OPTION;
 
     get dataKeys() {
         if (this.loaded !== 'SUCCESS' || !this.data.length ) {
@@ -110,7 +72,7 @@ export class NdxBookComponent implements OnInit {
         return this.dataKeys.filter(element => element !== 'name' && element !== 'ticker');
     }
 
-	constructor(private dataService: DataService) { }
+	constructor(private dataService: DataService, private ndxBookDataPipe: NdxBookDataPipe) { }
 
 	ngOnInit() {
         this.getNdxBook().then(_ => this.loaded = 'SUCCESS').catch(error => {
@@ -122,68 +84,113 @@ export class NdxBookComponent implements OnInit {
     getNdxBook(): Promise<any> {
         return this.dataService.selectNdxBook().toPromise().then(({ header, data, summary, currentNdx }) => {
             this.headers = NdxStockColumn.filter(element => element.display);
-            // this.headers = header;
             this.data = data;
             this.headers.sort((a, b) => a.order - b.order);
             this.headers.forEach(element => {
                 const { value } = element;
                 this.headerMap[value] = element;
             });
-            this.dataSnapShot = this.data.map(element => {
-                const parsed = {};
-                Object.keys(element).forEach(key => {
-                    parsed[key] = this.customPipe(element, key);
-                });
-                return parsed;
-            });
-
-            Object.keys(summary).forEach(key => {
-                this.dataSummary[key] = this.customPipe(summary, key);
+            this.summary = summary;
+            Object.keys(this.summary).forEach(key => {
+                if (key in this.headerMap) {
+                    this.dataSummary[key] = this.ndxBookDataPipe.transform(this.summary[key], this.headerMap[key].type);
+                }
             });
             this.dataSummary['lastPrice'] = currentNdx;
+            TARGET_PRICE_KEYS.forEach(key => {
+                this.dataSummary[key] = this.summary[key];
+            });
+            this.ndxTargetChart = this.getNdxTargetPriceChart();
+            this.ndxRatingChart = this.getNdxRatingChart();
+            this.ndxEpsChart = this.getNdxEpsChart();
         });
     }
 
     onRowSelect() {
-
+        // WARNING: Following code block is actually very dangerous code, because it directly manipulates primeng component. Can be broken in further versions of primeng.
+        if (this.selectedData.length > 5) {
+            this.selectedData.shift();
+            this.dataTable.selection = this.selectedData;
+            this.dataTable._selection = this.dataTable.selection;
+            this.dataTable.selectionChange.emit(this.dataTable.selection);
+            this.dataTable.tableService.onSelectionChange();
+            if (this.dataTable.isStateful()) {
+                this.dataTable.saveState();
+            }
+            this.dataTable.updateSelectionKeys();
+        }
+        
+        this.updatePotentialChart();
+        this.updateEpsChangeChart();
     }
 
     onRowUnselect() {
-
+        this.updatePotentialChart();
+        this.updateEpsChangeChart();
     }
 
-    customPipe(object: any, key: string) {
-        if (!(key in this.headerMap)) {
-            return '-';
-        }
+    updatePotentialChart() {
+        const nextChartData: ChartData = { labels: [ ], datasets: [ { data: [ ] } ] };
 
-        const value = object[key];
-        const { type } = this.headerMap[key];
+        this.selectedData.map(({ ticker, potential }) => {
+            nextChartData.labels.push(ticker);
+            nextChartData.datasets[0].data.push(potential);
+        });
 
-        if (!value || value.length == 0) {
-            return '-';
-        }
-
-        if (type == NDX_DATA_TYPE.TIMES) {
-            return `${ value.toFixed(DISPLAY_DECIMAL) }x`;
-        } else if (type == NDX_DATA_TYPE.PERCENTAGE) {
-            return `${ (value * CENTI).toFixed(DISPLAY_DECIMAL) }%`;
-        } else if (type == NDX_DATA_TYPE.VARIATION) {
-            return `${ value > 0 ? '+' : '' }${ (value * CENTI).toFixed(DISPLAY_DECIMAL) }%`;
-        } else if (type == NDX_DATA_TYPE.DATE) {
-            return (new Date(value)).toDateString();
-        } else if (type == NDX_DATA_TYPE.MARKET_CAP) {
-            if (value >= TRILLION * 10) return `$ ${ (value / TRILLION).toFixed(DISPLAY_DECIMAL) }T`;
-            if (value >= BILLION * 10) return `$ ${ (value / BILLION).toFixed(DISPLAY_DECIMAL) }B`;
-            if (value >= MILLION * 10) return `$ ${ (value / MILLION).toFixed(DISPLAY_DECIMAL) }M`;
-            if (value >= THOUSAND * 10) return `$ ${ (value / THOUSAND).toFixed(DISPLAY_DECIMAL) }K`;
-        } else if (type == NDX_DATA_TYPE.PRICE) {
-            return `$ ${value.toFixed(DISPLAY_DECIMAL)}`;
-        } else if (type == NDX_DATA_TYPE.NUMBER) {
-            return value;
-        } else {
-            return value;
-        }
+        this.potentialChart = nextChartData;
     }
 
+    updateEpsChangeChart() {
+        const nextChartData: ChartData = { labels: [ ], datasets: [ ] };
+
+        EPS_KEYS.forEach(key => nextChartData.labels.push(this.headerMap[key].label));
+
+        this.selectedData.map(({ ticker, epsNTM, epsFY1E, epsFY2E, epsFY3E }) => {
+            nextChartData.datasets.push({
+                label: ticker,
+                data: [ epsNTM, epsFY1E, epsFY2E, epsFY3E ]
+            });
+        });
+
+        this.epsChangeChart = nextChartData;
+    }
+
+    getNdxTargetPriceChart(): ChartData {
+        const keys = TARGET_PRICE_KEYS;
+
+        const labels = keys.map(key => this.headerMap[key].label);
+        const datasets = [{
+            data: keys.map(key => parseFloat(this.summary[key])),
+            backgroundColor: "#79D1CF",
+            fill: true,
+            tension: 0.3
+        }];
+        return { labels, datasets };
+    }
+
+    getNdxRatingChart(): ChartData {
+        const keys = [ 'strongSell', 'sell', 'hold', 'buy', 'strongBuy' ];
+
+        const labels = keys.map(key => this.headerMap[key].label);
+        const datasets = [{
+            data: keys.map(key => parseInt(this.summary[key])),
+            backgroundColor: '#FFA726',
+            fill: false,
+            tension: 0.3
+        }];
+        return { labels, datasets };
+    }
+
+    getNdxEpsChart(): ChartData {
+        const keys = [ 'epsNTM', 'epsFY1E', 'epsFY2E', 'epsFY3E' ];
+
+        const labels = keys.map(key => this.headerMap[key].label);
+        const datasets = [{
+            data: keys.map(key => parseInt(this.summary[key])),
+            backgroundColor: '#FFA726',
+            fill: false,
+            tension: 0.3
+        }];
+        return { labels, datasets };
+    }
 }
