@@ -25,6 +25,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.NUMBER,
         category: NDX_CATEGORY_TYPE.EPS_INFO,
+        width: '8em',
         display: true,
         order: 34
     },
@@ -389,6 +390,7 @@ export interface NdxStockFormat {
     value: string;
     description?: string;
     type: NDX_DATA_TYPE;
+    width?: string;
     category: NDX_CATEGORY_TYPE;
     order: number;
     display: boolean;

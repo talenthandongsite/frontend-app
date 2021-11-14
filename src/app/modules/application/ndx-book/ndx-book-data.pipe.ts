@@ -37,7 +37,7 @@ export class NdxBookDataPipe implements PipeTransform {
         } else if (type == NDX_DATA_TYPE.NUMBER) {
             return value.toFixed(DISPLAY_DECIMAL);
         } else if (type == NDX_DATA_TYPE.INTEGER) {
-            return value;
+            return Math.round(value);
         } else {
             return value;
         }

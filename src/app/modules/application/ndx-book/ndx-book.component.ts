@@ -1,10 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '@services/data/data.service';
-import { SelectNdxBookRes, NdxStockColumn, NdxStockFormat, NdxStock, NDX_DATA_TYPE, NDX_CATEGORY_TYPE, ChartData } from '@app/interfaces';
 import { NdxBookDataPipe } from './ndx-book-data.pipe';
 import { Table } from 'primeng/table';
-import { EPS_CHART_OPTION, EPS_KEYS, NDX_EPS_CHART_OPTION, NDX_RATING_CHART_OPTION, NDX_TARGET_CHART_OPTION, POTENTIAL_CHART_OPTION, TARGET_PRICE_KEYS } from './ndex-book-chart.constant';
-
+import { 
+    EPS_CHART_OPTION, EPS_KEYS, NDX_EPS_CHART_OPTION, NDX_RATING_CHART_OPTION, 
+    NDX_TARGET_CHART_OPTION, POTENTIAL_CHART_OPTION, TARGET_PRICE_KEYS 
+} from './ndex-book-chart.constant';
+import { 
+    SelectNdxBookRes, NdxStockColumn, NdxStockFormat, NdxStock, NDX_DATA_TYPE, 
+    NDX_CATEGORY_TYPE, ChartData 
+} from '@app/interfaces';
 
 @Component({
     selector: 'app-ndx-book',
@@ -98,11 +103,12 @@ export class NdxBookComponent implements OnInit {
             });
             this.dataSummary['lastPrice'] = currentNdx;
             TARGET_PRICE_KEYS.forEach(key => {
-                this.dataSummary[key] = this.summary[key];
+                this.dataSummary[key] = this.ndxBookDataPipe.transform(this.summary[key], NDX_DATA_TYPE.INTEGER);
             });
             this.ndxTargetChart = this.getNdxTargetPriceChart();
             this.ndxRatingChart = this.getNdxRatingChart();
             this.ndxEpsChart = this.getNdxEpsChart();
+
         });
     }
 
