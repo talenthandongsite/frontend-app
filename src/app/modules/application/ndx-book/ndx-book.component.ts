@@ -3,7 +3,7 @@ import { DataService } from '@services/data/data.service';
 import { NdxBookDataPipe } from './ndx-book-data.pipe';
 import { Table } from 'primeng/table';
 import { 
-    EPS_CHART_OPTION, EPS_KEYS, NDX_EPS_CHART_OPTION, NDX_RATING_CHART_OPTION, 
+    EPS_CHART_OPTION, EPS_KEYS, NDX_EPS_CHART_OPTION, NDX_INDEX_KEYS, NDX_RATING_CHART_OPTION, 
     NDX_TARGET_CHART_OPTION, POTENTIAL_CHART_OPTION, TARGET_PRICE_KEYS 
 } from './ndex-book-chart.constant';
 import { 
@@ -101,14 +101,12 @@ export class NdxBookComponent implements OnInit {
                     this.dataSummary[key] = this.ndxBookDataPipe.transform(this.summary[key], this.headerMap[key].type);
                 }
             });
-            this.dataSummary.lastPrice = this.summary.lastPrice;
-            TARGET_PRICE_KEYS.forEach(key => {
+            NDX_INDEX_KEYS.forEach(key => {
                 this.dataSummary[key] = this.ndxBookDataPipe.transform(this.summary[key], NDX_DATA_TYPE.INTEGER);
             });
             this.ndxTargetChart = this.getNdxTargetPriceChart();
             this.ndxRatingChart = this.getNdxRatingChart();
             this.ndxEpsChart = this.getNdxEpsChart();
-
         });
     }
 
