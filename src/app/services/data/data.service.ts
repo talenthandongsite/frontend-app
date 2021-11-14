@@ -113,8 +113,7 @@ export class DataService {
     }
 
     selectNdxBook(): Observable<SelectNdxBookRes> {
-        const params = { refined: 'true' };
-        return this.http.get<SelectNdxBookRes>(REQUEST_URL_TYPE.SELECT_NDX_BOOK, { params });
+        return this.http.get<SelectNdxBookRes>(REQUEST_URL_TYPE.SELECT_NDX_BOOK);
     }
 
     listMember(): Observable<any> {

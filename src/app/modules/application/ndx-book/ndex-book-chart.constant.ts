@@ -167,5 +167,5 @@ export const EPS_CHART_OPTION = {
     }
 };
 
-export const TARGET_PRICE_KEYS = [ 'priceTarget', 'y1Before', 'm6Before', 'm3Before', 'm1Before', 'w1Before' ];
+export const TARGET_PRICE_KEYS = [ 'y1Before', 'm6Before', 'm3Before', 'm1Before', 'w1Before', 'priceTarget' ];
 export const EPS_KEYS = [ 'epsNTM', 'epsFY1E', 'epsFY2E', 'epsFY3E' ];

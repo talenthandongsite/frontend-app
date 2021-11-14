@@ -87,7 +87,7 @@ export class NdxBookComponent implements OnInit {
     }
 
     getNdxBook(): Promise<any> {
-        return this.dataService.selectNdxBook().toPromise().then(({ header, data, summary, currentNdx }) => {
+        return this.dataService.selectNdxBook().toPromise().then(({ data, summary }) => {
             this.headers = NdxStockColumn.filter(element => element.display);
             this.data = data;
             this.headers.sort((a, b) => a.order - b.order);
@@ -101,7 +101,7 @@ export class NdxBookComponent implements OnInit {
                     this.dataSummary[key] = this.ndxBookDataPipe.transform(this.summary[key], this.headerMap[key].type);
                 }
             });
-            this.dataSummary['lastPrice'] = currentNdx;
+            this.dataSummary.lastPrice = this.summary.lastPrice;
             TARGET_PRICE_KEYS.forEach(key => {
                 this.dataSummary[key] = this.ndxBookDataPipe.transform(this.summary[key], NDX_DATA_TYPE.INTEGER);
             });

@@ -417,9 +417,7 @@ export interface NdxPrediction {
 }
 
 export interface NdxBookData {
-    header: NdxStockFormat[];
     data: NdxStock[];
-    currentNdx: number;
     summary: NdxStock;
 }
 
