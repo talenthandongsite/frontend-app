@@ -1,13 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '@services/data/data.service';
 import { NdxBookDataPipe } from './ndx-book-data.pipe';
 import { Table } from 'primeng/table';
 import { 
     EPS_CHART_OPTION, EPS_KEYS, NDX_EPS_CHART_OPTION, NDX_INDEX_KEYS, NDX_RATING_CHART_OPTION, 
-    NDX_TARGET_CHART_OPTION, POTENTIAL_CHART_OPTION, TARGET_PRICE_KEYS 
-} from './ndex-book-chart.constant';
+    NDX_TARGET_CHART_OPTION, POTENTIAL_CHART_OPTION, TARGET_PRICE_KEYS, NdxStockColumn 
+} from './ndx-book-chart.constant';
 import { 
-    SelectNdxBookRes, NdxStockColumn, NdxStockFormat, NdxStock, NDX_DATA_TYPE, 
+    NdxStockFormat, NdxStock, NDX_DATA_TYPE, 
     NDX_CATEGORY_TYPE, ChartData 
 } from '@app/interfaces';
 
@@ -21,7 +21,6 @@ export class NdxBookComponent implements OnInit {
     @ViewChild('dataTable') dataTable: Table;
 
     loaded: 'LOADING' | 'SUCCESS' | 'ERROR' = 'LOADING';
-
 
     // table data
     headers: NdxStockFormat[];
@@ -61,16 +60,12 @@ export class NdxBookComponent implements OnInit {
         return this.headers.filter(element => element.category === NDX_CATEGORY_TYPE.BASIC_INFO);
     }
 
-    get ibAndEpsHeader() {
-        return this.headers.filter(element => element.category !== NDX_CATEGORY_TYPE.BASIC_INFO);
+    get ibHeader() {
+        return this.headers.filter(element => element.category === NDX_CATEGORY_TYPE.IB_TARGET_INFO);
     }
 
-    get ibHeaderCount() {
-        return this.headers.filter(element => element.category === NDX_CATEGORY_TYPE.IB_TARGET_INFO).length;
-    }
-
-    get epsHeaderCount() {
-        return this.headers.filter(element => element.category === NDX_CATEGORY_TYPE.EPS_INFO).length;
+    get epsHeader() {
+        return this.headers.filter(element => element.category === NDX_CATEGORY_TYPE.EPS_INFO);
     }
 
     get summaryHeaderKeys() {
@@ -196,5 +191,9 @@ export class NdxBookComponent implements OnInit {
             tension: 0.3
         }];
         return { labels, datasets };
+    }
+
+    headerWidthReduce(previous, current) {
+        return previous + parseFloat(current.width.split(/em|rem|px/)[0]);
     }
 }

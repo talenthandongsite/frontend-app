@@ -38,9 +38,6 @@
         </div>
     </div>
     
-    
-    
-    
     <div class="section-table">
         <p-card header="NASDAQ 100 종목 데이터" >
     
@@ -58,29 +55,30 @@
             >
                 <ng-template pTemplate="header">
                     <tr>
-                        <th 
-                            rowspan="2" 
-                            *ngFor="let header of basicHeader" 
-                            style="width: 8em" 
+                        <th  
+                            *ngFor="let header of headers" 
+                            [ngStyle]="{'width': header.width || '8em' }"
                             [pSortableColumn]="header.value"
                         >
-                            {{ header.label }}
-                            <p-sortIcon [field]="header.value"></p-sortIcon>
+                            <div class="text-center">{{ header.label }}</div>
+                            <div class="flex justify-content-center">
+                                <p-sortIcon [field]="header.value"></p-sortIcon>
+                            </div>
                         </th>
-                        <th rowspan="1" [colSpan]="ibHeaderCount" [ngStyle]="{'width': '' + 8 * ibHeaderCount + 'em'}" >IB 투자은행 목표가 평균</th>
-                        <th rowspan="1" [colSpan]="epsHeaderCount" [ngStyle]="{'width': '' + 8 * epsHeaderCount + 'em'}" >EPS 전망치</th>
                     </tr>
                     <tr>
-                        <th *ngFor="let header of ibAndEpsHeader" style="width: 8em" [pSortableColumn]="header.value">{{header.label}}<p-sortIcon [field]="header.value"></p-sortIcon></th>
-                    </tr>
-                    <tr>
-                        <th colspan="2" style="width: 16em">NASDAQ 100</th>
-                        <th *ngFor="let key of summaryHeaderKeys" style="width: 8em">{{ dataSummary[key] }}</th>
+                        <th [ngStyle]="{'width': headerMap['ticker'].width || '8em' }">NDX100</th>
+                        <th *ngFor="let key of summaryHeaderKeys">{{ dataSummary[key] }}</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-data let-rowIndex="ticker">
                     <tr [pSelectableRow]="data" [pSelectableRowIndex]="rowIndex">
-                        <td *ngFor="let key of dataKeys" style="width: 8em">{{ data[key] | ndxBookData: headerMap[key].type }}</td>
+                        <td 
+                            *ngFor="let key of dataKeys" 
+                            [ngStyle]="{'width': headerMap[key].width || '8em'}"
+                        >
+                            {{ data[key] | ndxBookData: headerMap[key].type }}
+                        </td>
                     </tr>
                 </ng-template>
             </p-table>
