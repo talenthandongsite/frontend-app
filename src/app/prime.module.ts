@@ -13,8 +13,9 @@ import { DropdownModule } from 'primeng/dropdown';
 import { StepsModule } from 'primeng/steps';
 import { MenuModule } from 'primeng/menu';
 import { CaptchaModule } from 'primeng/captcha';
-import {CarouselModule} from 'primeng/carousel';
-import {ChartModule} from 'primeng/chart';
+import { CarouselModule } from 'primeng/carousel';
+import { ChartModule } from 'primeng/chart';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
     imports: [
@@ -32,7 +33,8 @@ import {ChartModule} from 'primeng/chart';
         StepsModule,
         CaptchaModule,
         ChartModule,
-        CarouselModule
+        CarouselModule,
+        TooltipModule
     ],
     exports: [
         CardModule,
@@ -49,7 +51,8 @@ import {ChartModule} from 'primeng/chart';
         StepsModule,
         CaptchaModule,
         ChartModule,
-        CarouselModule
+        CarouselModule,
+        TooltipModule
     ]
 })
 export class PrimeModule { };
