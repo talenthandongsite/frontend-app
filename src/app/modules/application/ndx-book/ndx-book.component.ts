@@ -4,7 +4,7 @@ import { NdxBookDataPipe } from './ndx-book-data.pipe';
 import { Table } from 'primeng/table';
 import { 
     EPS_CHART_OPTION, EPS_KEYS, NDX_EPS_CHART_OPTION, NDX_INDEX_KEYS, NDX_RATING_CHART_OPTION, 
-    NDX_TARGET_CHART_OPTION, POTENTIAL_CHART_OPTION, TARGET_PRICE_KEYS, NdxStockColumn 
+    NDX_TARGET_CHART_OPTION, POTENTIAL_CHART_OPTION, TARGET_PRICE_KEYS, NDX_STOCK_COLUMNS, SUMMARY_KEYS, FIXED_COLUMNS 
 } from './ndx-book-chart.constant';
 import { 
     NdxStockFormat, NdxStock, NDX_DATA_TYPE, 
@@ -30,9 +30,14 @@ export class NdxBookComponent implements OnInit {
 
     summary: NdxStock;
     dataSummary: any = { };
+    summaryKeys: string[] = SUMMARY_KEYS;
 
     // common data
     selectedData: NdxStock[] = [ ];
+
+    frozenColumns = [];
+    scrollableColumns = [];
+    frozenColumnWidth = '6em';
 
     // chart data
     ndxTargetChart: ChartData;
@@ -69,7 +74,7 @@ export class NdxBookComponent implements OnInit {
     }
 
     get summaryHeaderKeys() {
-        return this.dataKeys.filter(element => element !== 'name' && element !== 'ticker');
+        return this.dataKeys.filter(element => element !== 'name');
     }
 
 	constructor(private dataService: DataService, private ndxBookDataPipe: NdxBookDataPipe) { }
@@ -83,7 +88,7 @@ export class NdxBookComponent implements OnInit {
 
     getNdxBook(): Promise<any> {
         return this.dataService.selectNdxBook().toPromise().then(({ data, summary }) => {
-            this.headers = NdxStockColumn.filter(element => element.display);
+            this.headers = NDX_STOCK_COLUMNS.filter(element => element.display);
             this.data = data;
             this.headers.sort((a, b) => a.order - b.order);
             this.headers.forEach(element => {
@@ -99,6 +104,20 @@ export class NdxBookComponent implements OnInit {
             NDX_INDEX_KEYS.forEach(key => {
                 this.dataSummary[key] = this.ndxBookDataPipe.transform(this.summary[key], NDX_DATA_TYPE.INTEGER);
             });
+            this.dataSummary['ticker'] = 'NDX';
+
+            this.headers.forEach(element => {
+                if (FIXED_COLUMNS.includes(element.value)) {
+                    this.frozenColumns.push({ header: element.label, field: element.value });
+                } else {
+                    this.scrollableColumns.push({ header: element.label, field: element.value });
+                }
+            });
+
+            this.frozenColumnWidth = '' + FIXED_COLUMNS.reduce((prev, cur) => {
+                return prev + parseFloat(this.headerMap[cur].width.split(/em/)[0]);
+            }, 0) + 'em';
+
             this.ndxTargetChart = this.getNdxTargetPriceChart();
             this.ndxRatingChart = this.getNdxRatingChart();
             this.ndxEpsChart = this.getNdxEpsChart();
@@ -196,4 +215,18 @@ export class NdxBookComponent implements OnInit {
     headerWidthReduce(previous, current) {
         return previous + parseFloat(current.width.split(/em|rem|px/)[0]);
     }
+
+    // scrollLeftButtonPointerDown(e: Event) {
+    //     console.log('down')
+
+        
+    // }
+
+    // scrollLeftButtonPointerUp(e: Event) {
+    //     console.log('up');
+    // }
+
+    // scrollRightButtonClick(e: Event) {
+    //     console.log(e);
+    // }
 }

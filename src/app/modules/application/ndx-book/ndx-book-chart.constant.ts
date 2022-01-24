@@ -173,8 +173,7 @@ export const NDX_INDEX_KEYS = [ 'y1Before', 'm6Before', 'm3Before', 'm1Before', 
 export const TARGET_PRICE_KEYS = [ 'y1Before', 'm6Before', 'm3Before', 'm1Before', 'w1Before', 'priceTarget' ];
 export const EPS_KEYS = [ 'epsNTM', 'epsFY1E', 'epsFY2E', 'epsFY3E' ];
 
-
-export const NdxStockColumn: NdxStockFormat[] = [
+export const NDX_STOCK_COLUMNS: NdxStockFormat[] = [
     {
         label: 'EPS(FY1E)',
         value: 'epsFY1E',
@@ -213,7 +212,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         category: NDX_CATEGORY_TYPE.EPS_INFO,
         width: '6.5em',
         display: true,
-        order: 33
+        order: 32
     },
     {
         label: 'EPS(NTM)',
@@ -223,7 +222,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         category: NDX_CATEGORY_TYPE.EPS_INFO,
         width: '6.5em',
         display: true,
-        order: 32
+        order: 33
     },
     {
         label: '실적발표일',
@@ -330,7 +329,7 @@ export const NdxStockColumn: NdxStockFormat[] = [
         description: '',
         type: NDX_DATA_TYPE.STRING,
         category: NDX_CATEGORY_TYPE.BASIC_INFO,
-        width: '6em',
+        width: '5em',
         display: true,
         order: 1
     },
@@ -535,3 +534,6 @@ export const NdxStockColumn: NdxStockFormat[] = [
         order: 30
     },
 ]
+
+export const SUMMARY_KEYS = [ 'lastPrice', 'priceTarget', 'potential', 'epsNTM' ];
+export const FIXED_COLUMNS = ['ticker'];
