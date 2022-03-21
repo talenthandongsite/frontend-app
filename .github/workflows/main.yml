@@ -34,12 +34,12 @@ jobs:
           key: ${{ secrets.SERVER_ACCESS_KEY }}
           port: 22
           script_stop: true
+          envs: DOCKER_IMAGE_TAG,DOCKER_CONTAINER_NAME,DOCKER_NETWORK_NAME
           script: |
             cd ~/.github/frontend-app
             git checkout master
             git stash
             git pull origin master
             chmod 755 deployments/deploy.sh
-            echo $DOCKER_IMAGE_TAG
             export DOCKER_IMAGE_TAG DOCKER_CONTAINER_NAME DOCKER_NETWORK_NAME
             ./deployments/deploy.sh
