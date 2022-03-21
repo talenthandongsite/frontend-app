@@ -35,10 +35,11 @@ jobs:
           port: 22
           script_stop: true
           script: |
-            cd ~/.github/server-go
+            cd ~/.github/frontend-app
             git checkout master
             git stash
             git pull origin master
             chmod 755 deployments/deploy.sh
+            echo $DOCKER_IMAGE_TAG
             export DOCKER_IMAGE_TAG DOCKER_CONTAINER_NAME DOCKER_NETWORK_NAME
-            deploy.sh
+            ./deployments/deploy.sh
