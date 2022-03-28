@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from "@angular/router";
 import { Observable, of } from "rxjs";
-import { ACCESS_LEVEL_TYPE, ADMIN_ROUTE_TYPE, LOCAL_STORAGE_TYPE } from '@app/enums';
+import { ACCESS_LEVEL_TYPE, APP_ROUTE_TYPE, LOCAL_STORAGE_TYPE } from '@app/enums';
 import { DataService } from "@services/data/data.service";
 import { LocalStorageService } from "@services/local-storage/local-storage.service";
 
@@ -33,11 +33,11 @@ export class SystemAdminGuard implements CanActivate {
                 return true;      
             }).catch(error => {
                 console.log(error);
-                this.router.navigate([ADMIN_ROUTE_TYPE.NAVIGATE_LOGIN]);
+                this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_LOGIN]);
                 return false;
             });
         } else {
-            this.router.navigate([ADMIN_ROUTE_TYPE.NAVIGATE_LOGIN]);
+            this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_LOGIN]);
 			return of(false);
         }
     }

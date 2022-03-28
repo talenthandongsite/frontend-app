@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ACCESS_LEVEL_TYPE, ADMIN_ROUTE_TYPE, ICONS_TYPE } from '@app/enums';
+import { ACCESS_LEVEL_TYPE, APP_ROUTE_TYPE, ICONS_TYPE } from '@app/enums';
 import { LocalStorageService } from '@services/local-storage/local-storage.service';
 
 @Component({
@@ -26,46 +26,55 @@ export class ApplicationComponent implements OnInit {
         this.accessLevel = this.localStorageService.getAccessLevel();
         this.currentActivatedMenu = this.router.url.split('/').length == 2 ? '' : this.router.url.split('/')[2];
 
-        if (!this.nickname || !this.accessLevel) {
-            this.logout();
-        }
+        // if (!this.nickname || !this.accessLevel) {
+        //     this.logout();
+        // }
     }
 
     isAdmin(): boolean {
         return this.accessLevel !== ACCESS_LEVEL_TYPE.APPLICANT && this.accessLevel !== ACCESS_LEVEL_TYPE.MEMBER;
     }
 
-    goToMain() {
-        if (!this.isMain()) {
-            this.router.navigate([ADMIN_ROUTE_TYPE.NAVIGATE_MAIN]);
-            this.currentActivatedMenu = '';
-            this.menuSidebar = false;
-            this.userSidebar = false;
-        }
-    }
+    // goToMain() {
+    //     if (!this.isMain()) {
+    //         this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_MAIN]);
+    //         this.currentActivatedMenu = '';
+    //         this.menuSidebar = false;
+    //         this.userSidebar = false;
+    //     }
+    // }
 
     goToNdxBook() {
         if (!this.isNasdaqBook()) {
-            this.router.navigate([ADMIN_ROUTE_TYPE.NAVIGATE_NASDAQ_BOOK]);
-            this.currentActivatedMenu = ADMIN_ROUTE_TYPE.NASDAQ_BOOK;
+            this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_NASDAQ_BOOK]);
+            this.currentActivatedMenu = APP_ROUTE_TYPE.NASDAQ_BOOK;
             this.menuSidebar = false;
             this.userSidebar = false;
         }
     }
 
-    goToMember() {
-        if (!this.isMember()) {
-            this.router.navigate([ADMIN_ROUTE_TYPE.NAVIGATE_MEMBER]);
-            this.currentActivatedMenu = ADMIN_ROUTE_TYPE.MEMBER;
-            this.menuSidebar = false;
-            this.userSidebar = false;
-        }
-    }
+    // goToMember() {
+    //     if (!this.isMember()) {
+    //         this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_MEMBER]);
+    //         this.currentActivatedMenu = APP_ROUTE_TYPE.MEMBER;
+    //         this.menuSidebar = false;
+    //         this.userSidebar = false;
+    //     }
+    // }
 
-    goToTicket() {
-        if (!this.isTicket()) {
-            this.router.navigate([ADMIN_ROUTE_TYPE.NAVIGATE_MEMBER]);
-            this.currentActivatedMenu = ADMIN_ROUTE_TYPE.MEMBER;
+    // goToTicket() {
+    //     if (!this.isTicket()) {
+    //         this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_MEMBER]);
+    //         this.currentActivatedMenu = APP_ROUTE_TYPE.MEMBER;
+    //         this.menuSidebar = false;
+    //         this.userSidebar = false;
+    //     }
+    // }
+
+    goToDownload() {
+        if (!this.isDownload()) {
+            this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_DOWNLOAD]);
+            this.currentActivatedMenu = APP_ROUTE_TYPE.DOWNLOAD;
             this.menuSidebar = false;
             this.userSidebar = false;
         }
@@ -73,8 +82,8 @@ export class ApplicationComponent implements OnInit {
 
     // goToUsers() {
     //     if (!this.isUser()) {
-    //         this.router.navigate([ADMIN_ROUTE_TYPE.NAVIGATE_USERS]);
-    //         this.currentActivatedMenu = ADMIN_ROUTE_TYPE.USERS;
+    //         this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_USERS]);
+    //         this.currentActivatedMenu = APP_ROUTE_TYPE.USERS;
     //         this.menuSidebar = false;
     //         this.userSidebar = false;
     //     }
@@ -82,8 +91,8 @@ export class ApplicationComponent implements OnInit {
 
     // goToAllow() {
     //     if (!this.isAllow()) {
-    //         this.router.navigate([ADMIN_ROUTE_TYPE.NAVIGATE_ALLOW]);
-    //         this.currentActivatedMenu = ADMIN_ROUTE_TYPE.ALLOW;
+    //         this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_ALLOW]);
+    //         this.currentActivatedMenu = APP_ROUTE_TYPE.ALLOW;
     //         this.menuSidebar = false;
     //         this.userSidebar = false;
     //     }
@@ -91,43 +100,47 @@ export class ApplicationComponent implements OnInit {
 
     // goToInvitation() {
     //     if (!this.isInvitation()) {
-    //         this.router.navigate([ADMIN_ROUTE_TYPE.NAVIGATE_INVITATION]);
-    //         this.currentActivatedMenu = ADMIN_ROUTE_TYPE.INVIATION;
+    //         this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_INVITATION]);
+    //         this.currentActivatedMenu = APP_ROUTE_TYPE.INVIATION;
     //         this.menuSidebar = false;
     //         this.userSidebar = false;
     //     }
     // }
 
-    isMain() {
-        return this.currentActivatedMenu == '';
-    }
+    // isMain() {
+    //     return this.currentActivatedMenu == '';
+    // }
 
     isNasdaqBook() {
-        return this.currentActivatedMenu === ADMIN_ROUTE_TYPE.NASDAQ_BOOK;
+        return this.currentActivatedMenu === APP_ROUTE_TYPE.NASDAQ_BOOK;
     }
 
-    isMember() {
-        return this.currentActivatedMenu === ADMIN_ROUTE_TYPE.MEMBER;
-    }
+    // isMember() {
+    //     return this.currentActivatedMenu === APP_ROUTE_TYPE.MEMBER;
+    // }
 
-    isTicket() {
-        return this.currentActivatedMenu === ADMIN_ROUTE_TYPE.TICKET;
+    // isTicket() {
+    //     return this.currentActivatedMenu === APP_ROUTE_TYPE.TICKET;
+    // }
+
+    isDownload() {
+        return this.currentActivatedMenu === APP_ROUTE_TYPE.DOWNLOAD;
     }
 
     // isUser() {
-    //     return this.currentActivatedMenu === ADMIN_ROUTE_TYPE.USERS;
+    //     return this.currentActivatedMenu === APP_ROUTE_TYPE.USERS;
     // }
 
     // isAllow() {
-    //     return this.currentActivatedMenu === ADMIN_ROUTE_TYPE.ALLOW;
+    //     return this.currentActivatedMenu === APP_ROUTE_TYPE.ALLOW;
     // }
 
     // isInvitation() {
-    //     return this.currentActivatedMenu === ADMIN_ROUTE_TYPE.INVIATION;
+    //     return this.currentActivatedMenu === APP_ROUTE_TYPE.INVIATION;
     // }
 
-    logout() {
-        this.localStorageService.logout();
-        this.router.navigate([ADMIN_ROUTE_TYPE.NAVIGATE_LOGIN]);
-    }
+    // logout() {
+    //     this.localStorageService.logout();
+    //     this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_LOGIN]);
+    // }
 }

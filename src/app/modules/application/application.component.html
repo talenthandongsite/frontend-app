@@ -3,7 +3,7 @@
 		<i [class]="icon.LIST" style="font-size: 2em"></i>
 	</div>
 	<div>
-		<h2 class="m-0 cusor-pointer" (click)="goToMain()">TALENT 100</h2>
+		<h2 class="m-0 cusor-pointer">TALENT 100</h2>
 	</div>
 	<div (click)="userSidebar=true" class="grid grid-nogutter justify-content-center align-items-center cusor-pointer">
 		<!-- <i class="pi pi-user" style="font-size: 2em;"></i> -->
@@ -32,6 +32,9 @@
 		<div class="side-pannel-item" [ngClass]="{'selected': isNasdaqBook()}" (click)="goToNdxBook()">
 			NASDAQ 100 BOOK
 		</div>
+		<div class="side-pannel-item" [ngClass]="{'selected': isDownload()}" (click)="goToDownload()">
+			BULK FILE DOWNLOAD
+		</div>
 	</div>
 	<!-- <h3 *ngIf="isAdmin()" class="font-normal text-gray-500">관리자 메뉴</h3>
 	<div *ngIf="isAdmin()" class="side-pannel">
@@ -44,11 +47,11 @@
 	</div> -->
 </p-sidebar>
 
-<p-sidebar [(visible)]="userSidebar" position="right" [baseZIndex]="10000">
+<!-- <p-sidebar [(visible)]="userSidebar" position="right" [baseZIndex]="10000">
     <h1 style="font-weight:normal">{{ nickname }}</h1>
 	<button pButton type="button" (click)="logout()" label="로그아웃" class="ui-button-secondary"></button>
 	<div class="side-pannel">
-		<!-- <div class="side-pannel-item" [ngClass]="{'selected': isInvitation()}" (click)="goToInvitation()">
+		<div class="side-pannel-item" [ngClass]="{'selected': isInvitation()}" (click)="goToInvitation()">
 			초대장
 		</div>
 		<div class="side-pannel-item" [ngClass]="{'selected': isUser()}" (click)="goToUsers()">
@@ -56,6 +59,6 @@
 		</div>
 		<div class="side-pannel-item" [ngClass]="{'selected': isAllow()}" (click)="goToAllow()">
 			관리자
-		</div> -->
+		</div>
 	</div>
-</p-sidebar>
+</p-sidebar> -->

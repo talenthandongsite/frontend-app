@@ -1,4 +1,4 @@
-export enum ADMIN_ROUTE_TYPE {
+export enum APP_ROUTE_TYPE {
     ROOT = '',
 
     MAIN = '',
@@ -8,6 +8,7 @@ export enum ADMIN_ROUTE_TYPE {
     USERS = 'users',
     NASDAQ_BOOK = 'ndxBook',
     INVIATION = 'invitation',
+    DOWNLOAD = 'download',
 
     MEMBER = 'member',
     TICKET = 'ticket',
@@ -19,6 +20,7 @@ export enum ADMIN_ROUTE_TYPE {
     NAVIGATE_USERS = '/app/users',
     NAVIGATE_NASDAQ_BOOK = '/app/ndxBook',
     NAVIGATE_INVITATION = '/app/invitation',
+    NAVIGATE_DOWNLOAD = '/app/download',
 
     NAVIGATE_MEMBER = '/app/member',
     NAVIGATE_TICKET = '/app/ticket',
