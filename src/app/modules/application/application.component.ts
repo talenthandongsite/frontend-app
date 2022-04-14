@@ -35,14 +35,6 @@ export class ApplicationComponent implements OnInit {
         return this.accessLevel !== ACCESS_LEVEL_TYPE.APPLICANT && this.accessLevel !== ACCESS_LEVEL_TYPE.MEMBER;
     }
 
-    // goToMain() {
-    //     if (!this.isMain()) {
-    //         this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_MAIN]);
-    //         this.currentActivatedMenu = '';
-    //         this.menuSidebar = false;
-    //         this.userSidebar = false;
-    //     }
-    // }
 
     goToNdxBook() {
         if (!this.isNasdaqBook()) {
@@ -52,6 +44,33 @@ export class ApplicationComponent implements OnInit {
             this.userSidebar = false;
         }
     }
+
+    goToFttModel() {
+        if (!this.isFttModel()) {
+            this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_FTT_MODEL]);
+            this.currentActivatedMenu = APP_ROUTE_TYPE.FTT_MODEL;
+            this.menuSidebar = false;
+            this.userSidebar = false;
+        }
+    }
+
+    goToDownload() {
+        if (!this.isDownload()) {
+            this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_DOWNLOAD]);
+            this.currentActivatedMenu = APP_ROUTE_TYPE.DOWNLOAD;
+            this.menuSidebar = false;
+            this.userSidebar = false;
+        }
+    }
+
+    // goToMain() {
+    //     if (!this.isMain()) {
+    //         this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_MAIN]);
+    //         this.currentActivatedMenu = '';
+    //         this.menuSidebar = false;
+    //         this.userSidebar = false;
+    //     }
+    // }
 
     // goToMember() {
     //     if (!this.isMember()) {
@@ -71,14 +90,6 @@ export class ApplicationComponent implements OnInit {
     //     }
     // }
 
-    goToDownload() {
-        if (!this.isDownload()) {
-            this.router.navigate([APP_ROUTE_TYPE.NAVIGATE_DOWNLOAD]);
-            this.currentActivatedMenu = APP_ROUTE_TYPE.DOWNLOAD;
-            this.menuSidebar = false;
-            this.userSidebar = false;
-        }
-    }
 
     // goToUsers() {
     //     if (!this.isUser()) {
@@ -107,13 +118,21 @@ export class ApplicationComponent implements OnInit {
     //     }
     // }
 
-    // isMain() {
-    //     return this.currentActivatedMenu == '';
-    // }
-
     isNasdaqBook() {
         return this.currentActivatedMenu === APP_ROUTE_TYPE.NASDAQ_BOOK;
     }
+
+    isFttModel() {
+        return this.currentActivatedMenu === APP_ROUTE_TYPE.FTT_MODEL;
+    }
+
+    isDownload() {
+        return this.currentActivatedMenu === APP_ROUTE_TYPE.DOWNLOAD;
+    }
+
+    // isMain() {
+    //     return this.currentActivatedMenu == '';
+    // }
 
     // isMember() {
     //     return this.currentActivatedMenu === APP_ROUTE_TYPE.MEMBER;
@@ -123,9 +142,6 @@ export class ApplicationComponent implements OnInit {
     //     return this.currentActivatedMenu === APP_ROUTE_TYPE.TICKET;
     // }
 
-    isDownload() {
-        return this.currentActivatedMenu === APP_ROUTE_TYPE.DOWNLOAD;
-    }
 
     // isUser() {
     //     return this.currentActivatedMenu === APP_ROUTE_TYPE.USERS;

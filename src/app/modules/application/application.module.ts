@@ -13,11 +13,13 @@ import { ProductService } from "./ndx-book/productservice";
 import { SystemAdminGuard } from "./access-level/system-admin.guard";
 import { NdxBookDataPipe } from "./ndx-book/ndx-book-data.pipe";
 import { DownloadComponent } from "./download/download.component";
+import { FttModelComponent } from "./ftt-model/ftt-model.component";
 
 @NgModule({
     declarations: [
         ApplicationComponent,
         NdxBookComponent,
+        FttModelComponent,
         DownloadComponent,
         NdxBookDataPipe
     ],

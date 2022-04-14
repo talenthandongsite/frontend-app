@@ -26,15 +26,18 @@
 <p-sidebar [(visible)]="menuSidebar" [baseZIndex]="10000">
 	<h1 class="font-normal">MENU</h1>
 	<div class="side-pannel">
-		<!-- <div class="side-pannel-item" [ngClass]="{'selected': isMain()}" (click)="goToMain()">
-			메인화면
-		</div> -->
 		<div class="side-pannel-item" [ngClass]="{'selected': isNasdaqBook()}" (click)="goToNdxBook()">
 			NASDAQ 100 BOOK
+		</div>
+		<div class="side-pannel-item" [ngClass]="{'selected': isFttModel()}" (click)="goToFttModel()">
+			FTT PRICE MODEL	
 		</div>
 		<div class="side-pannel-item" [ngClass]="{'selected': isDownload()}" (click)="goToDownload()">
 			BULK FILE DOWNLOAD
 		</div>
+		<!-- <div class="side-pannel-item" [ngClass]="{'selected': isMain()}" (click)="goToMain()">
+			메인화면
+		</div> -->
 	</div>
 	<!-- <h3 *ngIf="isAdmin()" class="font-normal text-gray-500">관리자 메뉴</h3>
 	<div *ngIf="isAdmin()" class="side-pannel">

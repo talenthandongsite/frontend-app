@@ -6,8 +6,10 @@ export enum APP_ROUTE_TYPE {
     JOIN_PAGE = 'join',
     ALLOW = 'allow',
     USERS = 'users',
-    NASDAQ_BOOK = 'ndxBook',
     INVIATION = 'invitation',
+
+    NASDAQ_BOOK = 'ndxBook',
+    FTT_MODEL = 'fttModel',
     DOWNLOAD = 'download',
 
     MEMBER = 'member',
@@ -18,8 +20,10 @@ export enum APP_ROUTE_TYPE {
     NAVIGATE_JOIN_PAGE = '/app/join',
     NAVIGATE_ALLOW = '/app/allow',
     NAVIGATE_USERS = '/app/users',
-    NAVIGATE_NASDAQ_BOOK = '/app/ndxBook',
     NAVIGATE_INVITATION = '/app/invitation',
+
+    NAVIGATE_NASDAQ_BOOK = '/app/ndxBook',
+    NAVIGATE_FTT_MODEL = '/app/fttModel',
     NAVIGATE_DOWNLOAD = '/app/download',
 
     NAVIGATE_MEMBER = '/app/member',
