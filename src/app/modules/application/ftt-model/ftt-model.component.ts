@@ -14,6 +14,8 @@ export class FttModelComponent implements OnInit {
 	}
 
 	onLoad(obj) {
-		obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+		setTimeout(() => {
+			obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+		}, 3000);
 	}
 }
