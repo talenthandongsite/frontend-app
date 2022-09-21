@@ -39,6 +39,7 @@ jobs:
             git checkout master
             git stash
             git pull origin master
-            chmod 755 deployments/deploy.sh
-            export DOCKER_NETWORK
-            ./deployments/deploy.sh
+            npm i
+            npm run build
+            cp -R dist/* ~/.html/
+            

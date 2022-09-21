@@ -3,6 +3,11 @@ node_modules
 package-lock.json
 yarn-lock.json
 
+# IDEs
 /.vscode
 
+# misc
 .DS_Store
+
+# build output
+dist
