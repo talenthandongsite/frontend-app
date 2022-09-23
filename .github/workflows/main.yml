@@ -40,7 +40,7 @@ jobs:
             git stash
             git pull origin master
             npm i
-            npm run build 2> /dev/null
-            sudo rm -r /usr/share/nginx/html/* 2> /dev/null
+            npm run build
+            sudo rm -r /usr/share/nginx/html/*
             sudo cp -R dist/* /usr/share/nginx/html/
             
