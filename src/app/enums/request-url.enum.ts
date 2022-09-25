@@ -32,3 +32,11 @@ export enum REQUEST_URL_TYPE {
     SELECT_MEMBER = '/api/member',
     UPDATE_MEMBER = '/api/member',
 }
+
+export enum ServerUrl {
+    v1 = '/api/v1',
+}
+
+export enum RequestUrl {
+    ndxBook = '/ndxBook',
+}

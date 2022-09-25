@@ -14,7 +14,7 @@ import {
     RunRegisterInterviewReq, 
     RunRegistrationReq, RunRegistrationRes, RunTransferInvitationReq, RunVerifyAccessReq, SelectAdminRes, SelectInvitationRes, SelectNdxBookRes, SelectUserRes, UpdateUserReq
 } from '@app/interfaces';
-import { REQUEST_URL_TYPE } from '@app/enums';
+import { RequestUrl, REQUEST_URL_TYPE, ServerUrl } from '@app/enums';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -113,7 +113,7 @@ export class DataService {
     }
 
     selectNdxBook(): Observable<SelectNdxBookRes> {
-        return this.http.get<SelectNdxBookRes>(REQUEST_URL_TYPE.SELECT_NDX_BOOK);
+        return this.http.get<SelectNdxBookRes>(ServerUrl.v1 + RequestUrl.ndxBook);
     }
 
     listMember(): Observable<any> {
