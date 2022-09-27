@@ -43,4 +43,5 @@ jobs:
             npm run build
             sudo rm -r /usr/share/nginx/html/*
             sudo cp -R dist/* /usr/share/nginx/html/
+            sudo nginx -s reload
             
