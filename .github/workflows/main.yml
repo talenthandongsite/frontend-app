@@ -39,8 +39,6 @@ jobs:
             git checkout master
             git stash
             git pull origin master
-            npm i --force
-            npm run build
             sudo rm -r /usr/share/nginx/html/*
             sudo cp -R dist/* /usr/share/nginx/html/
             sudo nginx -s reload

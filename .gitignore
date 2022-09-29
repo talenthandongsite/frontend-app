@@ -9,5 +9,3 @@ yarn-lock.json
 # misc
 .DS_Store
 
-# build output
-dist
